@@ -1,0 +1,1678 @@
+/*
+Theme Name: ADE SAMPA 2025
+Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
+Author: ADE SAMPA / Brunno Molinaro
+Author URI: https://github.com/brunnomolinaro
+Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido fielmente a partir do protótipo oficial no Figma. Inclui página inicial completa, abas interativas para Espaços de Trabalho (Teia, Sampa Cast, Sampa Áudio, Sampa Estúdio), vitrine de Editais com filtros por categoria e carrossel, página institucional Sobre (Missão, Visão e Valores) e menu de Transparência.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tema-ade-sampa
+Tags: custom-menu, custom-logo, featured-images, full-width-template, institutional, government
+*/
+
+/* ==========================================================================
+   1. DESIGN TOKENS & RESET
+   ========================================================================== */
+:root {
+	--ade-blue-dark: #143B7D;
+	--ade-blue-primary: #1D428A;
+	--ade-blue-medium: #2D5596;
+	--ade-blue-btn: #2B548E;
+	--ade-cyan: #13E2DE;
+	--ade-cyan-bright: #15E6E1;
+	--ade-aqua-bg: #9DF5F5;
+	--ade-ice-bg: #E8EFF7;
+	--ade-white: #FFFFFF;
+	--ade-text-dark: #1E293B;
+	--ade-text-muted: #334155;
+	--ade-font-sans: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--ade-font-condensed: 'Barlow Condensed', 'Fira Sans', sans-serif;
+	--ade-radius-sm: 8px;
+	--ade-radius-md: 14px;
+	--ade-radius-lg: 22px;
+	--ade-radius-xl: 28px;
+	--ade-shadow-card: 0 10px 30px rgba(20, 59, 125, 0.08);
+	--ade-shadow-glass: 0 12px 32px rgba(20, 59, 125, 0.14);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 16px;
+}
+
+body {
+	font-family: var(--ade-font-sans);
+	color: var(--ade-text-dark);
+	background-color: var(--ade-white);
+	line-height: 1.55;
+	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+ul {
+	list-style: none;
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* ==========================================================================
+   2. BUTTONS & COMMON SECTION HEADERS
+   ========================================================================== */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--ade-font-sans);
+	font-weight: 500;
+	font-size: 0.95rem;
+	line-height: 1;
+	padding: 13px 28px;
+	border-radius: var(--ade-radius-sm);
+	border: 1.5px solid transparent;
+	cursor: pointer;
+	transition: transform 0.18s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+}
+
+.btn-lg {
+	padding: 15px 34px;
+	font-size: 1rem;
+}
+
+.btn-sm {
+	padding: 11px 24px;
+	font-size: 0.9rem;
+}
+
+.btn-primary {
+	background-color: var(--ade-blue-btn);
+	color: var(--ade-white);
+	border-color: var(--ade-blue-btn);
+}
+
+.btn-primary:hover {
+	background-color: var(--ade-blue-dark);
+	border-color: var(--ade-blue-dark);
+	box-shadow: 0 6px 18px rgba(20, 59, 125, 0.25);
+}
+
+.btn-outline {
+	background-color: rgba(255, 255, 255, 0.45);
+	color: var(--ade-blue-primary);
+	border-color: var(--ade-blue-primary);
+}
+
+.btn-outline:hover {
+	background-color: var(--ade-blue-primary);
+	color: var(--ade-white);
+}
+
+.btn-outline-light {
+	background-color: rgba(255, 255, 255, 0.18);
+	color: var(--ade-white);
+	border-color: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(6px);
+}
+
+.btn-outline-light:hover {
+	background-color: var(--ade-white);
+	color: var(--ade-blue-dark);
+}
+
+.btn-cyan {
+	background-color: var(--ade-cyan);
+	color: var(--ade-blue-dark);
+	border-color: var(--ade-cyan);
+	font-weight: 600;
+}
+
+.btn-cyan:hover {
+	background-color: #00f5f0;
+	border-color: #00f5f0;
+}
+
+.section-header {
+	margin-bottom: 42px;
+}
+
+.section-title {
+	font-size: 2.35rem;
+	font-weight: 700;
+	color: var(--ade-blue-primary);
+	letter-spacing: -0.01em;
+	margin-bottom: 12px;
+}
+
+.section-subtitle {
+	font-size: 1.05rem;
+	color: var(--ade-blue-primary);
+	max-width: 780px;
+	margin: 0 auto;
+	line-height: 1.5;
+	font-weight: 400;
+}
+
+.section-header-light .section-title,
+.section-header-light .section-subtitle {
+	color: var(--ade-white);
+}
+
+/* ==========================================================================
+   3. BRAND & PROGRAM LOGOS (SVG + BADGES)
+   ========================================================================== */
+.ade-brand-logo {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	line-height: 1;
+	user-select: none;
+}
+
+.ade-brand-main {
+	font-family: var(--ade-font-condensed);
+	font-weight: 800;
+	font-size: 2.35rem;
+	letter-spacing: 0.02em;
+	color: var(--ade-blue-primary);
+}
+
+.ade-brand-sub {
+	font-family: var(--ade-font-sans);
+	font-size: 0.45rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: var(--ade-blue-primary);
+	margin-top: 2px;
+	text-transform: uppercase;
+}
+
+.ade-brand-footer .ade-brand-main,
+.ade-brand-footer .ade-brand-sub {
+	color: var(--ade-white);
+}
+
+.ade-brand-footer {
+	align-items: flex-start;
+}
+
+.ade-brand-footer .ade-brand-main {
+	font-size: 2.75rem;
+}
+
+.ade-brand-footer .ade-brand-sub {
+	font-size: 0.52rem;
+}
+
+/* Program Logos */
+.prog-logo {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.prog-icon {
+	flex-shrink: 0;
+}
+
+.prog-logo-text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	line-height: 1.05;
+}
+
+.prog-title-blue {
+	font-family: var(--ade-font-condensed);
+	font-size: 1.85rem;
+	font-weight: 600;
+	color: var(--ade-blue-primary);
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+.prog-title-blue strong {
+	font-weight: 800;
+}
+
+.prog-title-lg {
+	font-size: 2.15rem;
+}
+
+.prog-title-white {
+	font-family: var(--ade-font-condensed);
+	font-size: 2.2rem;
+	font-weight: 600;
+	color: var(--ade-white);
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.prog-title-white strong {
+	font-weight: 800;
+}
+
+.prog-title-xl {
+	font-size: 2.8rem;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+}
+
+.prog-by-badge {
+	display: inline-block;
+	margin-top: 4px;
+	font-size: 0.65rem;
+	font-weight: 500;
+	color: var(--ade-blue-primary);
+	border: 1px solid var(--ade-blue-primary);
+	border-radius: 3px;
+	padding: 2px 6px;
+	letter-spacing: 0.03em;
+}
+
+.prog-by-badge strong {
+	font-family: var(--ade-font-condensed);
+	font-weight: 800;
+	font-size: 0.72rem;
+}
+
+.prog-by-white {
+	color: var(--ade-white);
+	border-color: rgba(255, 255, 255, 0.75);
+}
+
+.prog-sub-caption {
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	color: var(--ade-blue-primary);
+	margin-top: 3px;
+}
+
+.prog-edital-kicker {
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	color: var(--ade-blue-primary);
+}
+
+.ade-ensina-img {
+	max-height: 58px;
+	width: auto;
+	margin: 0 auto;
+}
+
+/* ==========================================================================
+   4. FIXED GLASSMORPHIC HEADER & TRANSPARÊNCIA DROPDOWN
+   ========================================================================== */
+.site-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	background: rgba(235, 242, 250, 0.78);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+	height: 82px;
+	display: flex;
+	align-items: center;
+}
+
+.header-container {
+	width: 100%;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 0 24px;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+}
+
+.nav-list {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+}
+
+.nav-item > a,
+.nav-dropdown-toggle {
+	font-family: var(--ade-font-sans);
+	font-size: 0.95rem;
+	font-weight: 400;
+	color: var(--ade-blue-primary);
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 2px;
+	position: relative;
+}
+
+.nav-item.current-menu-item > a,
+.nav-item > a:hover,
+.nav-dropdown-toggle:hover {
+	font-weight: 600;
+	color: var(--ade-blue-dark);
+}
+
+/* Transparência Dropdown */
+.nav-item-has-dropdown {
+	position: relative;
+}
+
+.chevron-icon {
+	transition: transform 0.2s ease;
+}
+
+.nav-item-has-dropdown.open .chevron-icon,
+.nav-item-has-dropdown:hover .chevron-icon {
+	transform: rotate(180deg);
+}
+
+.transparencia-dropdown {
+	position: absolute;
+	top: calc(100% + 14px);
+	left: -12px;
+	min-width: 215px;
+	background: rgba(45, 85, 150, 0.94);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-radius: 12px;
+	padding: 14px 18px;
+	box-shadow: 0 14px 34px rgba(20, 59, 125, 0.28);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-6px);
+	transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+	z-index: 1010;
+}
+
+.nav-item-has-dropdown:hover .transparencia-dropdown,
+.nav-item-has-dropdown.open .transparencia-dropdown {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.transparencia-dropdown li + li {
+	margin-top: 8px;
+}
+
+.transparencia-dropdown a {
+	display: block;
+	color: var(--ade-white);
+	font-size: 0.9rem;
+	font-weight: 400;
+	padding: 3px 0;
+	transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.transparencia-dropdown a:hover {
+	color: var(--ade-cyan);
+	transform: translateX(3px);
+}
+
+.site-branding {
+	text-align: center;
+}
+
+.header-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+}
+
+.btn-header-cta,
+.btn-header-login {
+	padding: 10px 22px;
+	font-size: 0.9rem;
+}
+
+.mobile-menu-toggle {
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 28px;
+	height: 20px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.mobile-menu-toggle span {
+	display: block;
+	width: 100%;
+	height: 2.5px;
+	background-color: var(--ade-blue-primary);
+	border-radius: 2px;
+}
+
+/* ==========================================================================
+   5. HERO SECTION (HOME)
+   ========================================================================== */
+.hero-section {
+	position: relative;
+	min-height: 670px;
+	padding-top: 140px;
+	padding-bottom: 90px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		180deg,
+		rgba(22, 58, 122, 0.55) 0%,
+		rgba(20, 59, 125, 0.72) 55%,
+		rgba(20, 59, 125, 0.82) 100%
+	);
+	z-index: 1;
+}
+
+.hero-content {
+	position: relative;
+	z-index: 3;
+	text-align: center;
+	color: var(--ade-white);
+	max-width: 820px;
+}
+
+.hero-kicker {
+	font-size: 0.92rem;
+	font-weight: 400;
+	letter-spacing: 0.36em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.92);
+	margin-bottom: 18px;
+}
+
+.hero-title {
+	font-size: 3.1rem;
+	font-weight: 700;
+	line-height: 1.18;
+	color: var(--ade-white);
+	margin-bottom: 34px;
+}
+
+.hero-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+}
+
+/* Decorative Cyan Plus Grid (Bottom Left) */
+.hero-deco-plus {
+	position: absolute;
+	left: 0;
+	bottom: -18px;
+	width: 150px;
+	height: 120px;
+	z-index: 4;
+	background-image:
+		linear-gradient(to right, transparent 9px, var(--ade-cyan) 9px, var(--ade-cyan) 13px, transparent 13px),
+		linear-gradient(to bottom, transparent 9px, var(--ade-cyan) 9px, var(--ade-cyan) 13px, transparent 13px);
+	background-size: 28px 28px;
+	mask-image: radial-gradient(circle at center, black 55%, transparent 56%);
+	-webkit-mask-image: radial-gradient(circle at center, black 55%, transparent 56%);
+	opacity: 0.95;
+}
+
+/* Decorative Blue Dots Grid (Bottom Right) */
+.hero-deco-dots {
+	position: absolute;
+	right: 12px;
+	bottom: -24px;
+	width: 170px;
+	height: 130px;
+	z-index: 4;
+	background-image: radial-gradient(var(--ade-blue-medium) 4px, transparent 4.5px);
+	background-size: 22px 22px;
+	opacity: 0.85;
+}
+
+/* ==========================================================================
+   6. ATENDIMENTO AO EMPREENDEDOR
+   ========================================================================== */
+.section-atendimento {
+	padding: 84px 0 72px;
+	background-color: var(--ade-white);
+}
+
+.atendimento-grid {
+	display: grid;
+	grid-template-columns: 1.05fr 0.95fr;
+	gap: 56px;
+	align-items: center;
+}
+
+.photo-collage-2x2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px;
+}
+
+.photo-collage-2x2 img {
+	width: 100%;
+	height: 155px;
+	object-fit: cover;
+	border-radius: var(--ade-radius-md);
+}
+
+.atendimento-unidades-text {
+	text-align: center;
+	color: var(--ade-blue-primary);
+	font-size: 1rem;
+	margin: 22px 0 18px;
+}
+
+.atendimento-btn-wrap {
+	text-align: center;
+}
+
+.atendimento-programs-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.program-item {
+	max-width: 420px;
+}
+
+.program-logo-wrap {
+	margin-bottom: 14px;
+	display: flex;
+	justify-content: center;
+}
+
+.program-description {
+	color: var(--ade-blue-primary);
+	font-size: 0.96rem;
+	line-height: 1.55;
+}
+
+.cyan-divider {
+	width: 100%;
+	max-width: 390px;
+	border: none;
+	border-top: 2px solid var(--ade-cyan);
+	margin: 28px auto;
+}
+
+.atendimento-programs-col .atendimento-btn-wrap {
+	margin-top: 28px;
+}
+
+/* ==========================================================================
+   7. ESPAÇOS DE TRABALHO & HUB'S DE INOVAÇÃO
+   ========================================================================== */
+.section-espacos-wrapper {
+	padding: 20px 0 80px;
+}
+
+.espacos-blue-box {
+	background-color: var(--ade-blue-medium);
+	border-radius: var(--ade-radius-xl);
+	padding: 58px 52px 52px;
+	color: var(--ade-white);
+	box-shadow: 0 20px 50px rgba(20, 59, 125, 0.16);
+}
+
+/* Interactive Tabs Bar */
+.espacos-tabs-nav {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 16px;
+	max-width: 920px;
+	margin: 0 auto 44px;
+}
+
+.espacos-tab-btn {
+	background-color: rgba(20, 59, 125, 0.55);
+	color: var(--ade-white);
+	border: 1.5px solid transparent;
+	border-radius: var(--ade-radius-sm);
+	padding: 13px 18px;
+	font-family: var(--ade-font-sans);
+	font-size: 0.96rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.espacos-tab-btn:hover {
+	background-color: rgba(20, 59, 125, 0.8);
+}
+
+.espacos-tab-btn.active {
+	background-color: var(--ade-blue-dark);
+	border-color: var(--ade-cyan);
+	box-shadow: 0 4px 16px rgba(19, 226, 222, 0.22);
+}
+
+.espacos-panel-grid {
+	display: grid;
+	grid-template-columns: 1.05fr 0.95fr;
+	gap: 48px;
+	align-items: center;
+	max-width: 980px;
+	margin: 0 auto 56px;
+}
+
+.photo-collage-2col {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+.photo-collage-2col img {
+	width: 100%;
+	height: 315px;
+	object-fit: cover;
+	border-radius: var(--ade-radius-md);
+}
+
+.photo-collage-single img {
+	width: 100%;
+	height: 315px;
+	object-fit: cover;
+	border-radius: var(--ade-radius-md);
+}
+
+.espacos-info {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.espacos-logo {
+	margin-bottom: 20px;
+}
+
+.espacos-desc {
+	font-size: 0.98rem;
+	line-height: 1.6;
+	color: rgba(255, 255, 255, 0.95);
+	max-width: 430px;
+}
+
+/* Nested Cyan Box: HUB's de inovação */
+.hubs-cyan-box {
+	background-color: var(--ade-cyan);
+	border-radius: var(--ade-radius-lg);
+	padding: 48px 44px 52px;
+	color: var(--ade-blue-primary);
+}
+
+.hubs-title {
+	color: var(--ade-blue-primary);
+}
+
+.hubs-subtitle {
+	color: var(--ade-blue-primary);
+}
+
+.hubs-cards-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 32px;
+	max-width: 920px;
+	margin: 0 auto;
+}
+
+.hub-white-card {
+	background-color: var(--ade-white);
+	border-radius: var(--ade-radius-md);
+	padding: 36px 32px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	box-shadow: 0 8px 24px rgba(20, 59, 125, 0.08);
+}
+
+.hub-card-logo {
+	margin-bottom: 18px;
+}
+
+.hub-card-desc {
+	font-size: 0.94rem;
+	color: var(--ade-blue-primary);
+	line-height: 1.55;
+	margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   8. SKYLINE BANNER DIVIDER
+   ========================================================================== */
+.skyline-banner {
+	position: relative;
+	width: 100%;
+	height: 290px;
+	background-size: cover;
+	background-position: center 45%;
+	background-repeat: no-repeat;
+}
+
+.skyline-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(29, 66, 138, 0.65) 0%,
+		rgba(45, 85, 150, 0.48) 50%,
+		rgba(29, 66, 138, 0.65) 100%
+	);
+}
+
+/* ==========================================================================
+   9. PRODUTOS FINANCEIROS & NOSSOS PARCEIROS
+   ========================================================================== */
+.section-produtos-financeiros {
+	background-color: var(--ade-ice-bg);
+	padding: 76px 0 60px;
+}
+
+.produtos-grid {
+	display: grid;
+	grid-template-columns: 1fr 0.85fr 1fr;
+	gap: 32px;
+	align-items: stretch;
+	margin-bottom: 48px;
+}
+
+.produtos-col-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 20px 12px;
+}
+
+.credsampa-logo-wrap {
+	margin-bottom: 18px;
+}
+
+.credsampa-desc {
+	color: var(--ade-blue-primary);
+	font-size: 0.96rem;
+	line-height: 1.58;
+	max-width: 320px;
+}
+
+.produtos-col-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.produtos-center-img {
+	width: 100%;
+	height: 360px;
+	object-fit: cover;
+	border-radius: var(--ade-radius-md);
+	box-shadow: var(--ade-shadow-card);
+}
+
+.produtos-col-right {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+}
+
+.fin-feature-card {
+	border-radius: var(--ade-radius-md);
+	padding: 28px 26px;
+	text-align: center;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.fin-card-blue {
+	background-color: var(--ade-blue-medium);
+	color: var(--ade-white);
+}
+
+.fin-card-cyan {
+	background-color: var(--ade-cyan);
+	color: var(--ade-blue-primary);
+}
+
+.fin-card-title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.fin-card-text {
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+
+/* Nossos Parceiros Banner */
+.parceiros-banner {
+	background-color: var(--ade-blue-dark);
+	border-radius: var(--ade-radius-lg);
+	padding: 32px 36px 36px;
+	text-align: center;
+	color: var(--ade-white);
+	box-shadow: 0 14px 34px rgba(20, 59, 125, 0.18);
+}
+
+.parceiros-title {
+	font-size: 1.45rem;
+	font-weight: 700;
+	margin-bottom: 26px;
+}
+
+.parceiros-logos-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 22px;
+}
+
+.partner-logo-img {
+	max-height: 34px;
+	width: auto;
+	object-fit: contain;
+	filter: brightness(0) invert(1);
+	opacity: 0.95;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.partner-logo-tall {
+	max-height: 46px;
+}
+
+.partner-logo-img:hover {
+	opacity: 1;
+	transform: scale(1.05);
+}
+
+.partner-text-logo {
+	color: var(--ade-white);
+	font-family: var(--ade-font-sans);
+	line-height: 1;
+	user-select: none;
+}
+
+.partner-caixa {
+	font-weight: 800;
+	font-size: 1.45rem;
+	letter-spacing: 0.04em;
+}
+
+.partner-bancodopovo {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-left: 3px solid var(--ade-cyan);
+	padding-left: 7px;
+}
+
+.partner-bancodopovo small {
+	font-size: 0.55rem;
+	letter-spacing: 0.08em;
+}
+
+.partner-bancodopovo strong {
+	font-size: 1.1rem;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   10. SISTEMA DE GESTÃO PARA O SEU NEGÓCIO
+   ========================================================================== */
+.section-sistema-gestao {
+	padding: 80px 0 76px;
+	background-color: var(--ade-white);
+}
+
+.gestao-showcase {
+	position: relative;
+	max-width: 980px;
+	margin: 0 auto 38px;
+	display: flex;
+	align-items: center;
+}
+
+.gestao-photo-wrap {
+	position: relative;
+	width: 62%;
+	border-radius: var(--ade-radius-lg);
+	overflow: hidden;
+	box-shadow: var(--ade-shadow-card);
+}
+
+.gestao-photo {
+	width: 100%;
+	height: 370px;
+	object-fit: cover;
+}
+
+.erp-gratuito-badge {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: var(--ade-cyan);
+	color: var(--ade-blue-dark);
+	font-weight: 700;
+	font-size: 1.35rem;
+	padding: 14px 32px;
+	border-top-right-radius: var(--ade-radius-md);
+}
+
+.gestao-glass-card {
+	width: 48%;
+	margin-left: -10%;
+	z-index: 2;
+	background: rgba(232, 239, 247, 0.86);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-radius: var(--ade-radius-lg);
+	padding: 44px 40px;
+	text-align: center;
+	box-shadow: var(--ade-shadow-glass);
+}
+
+.gestao-logo-wrap {
+	margin-bottom: 18px;
+	display: flex;
+	justify-content: center;
+}
+
+.gestao-card-desc {
+	color: var(--ade-blue-primary);
+	font-size: 0.98rem;
+	line-height: 1.58;
+}
+
+/* ==========================================================================
+   11. CAPACITAÇÕES
+   ========================================================================== */
+.section-capacitacoes {
+	background-color: var(--ade-ice-bg);
+	padding: 76px 0 80px;
+}
+
+.capacitacoes-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 32px;
+	max-width: 900px;
+	margin: 0 auto 38px;
+}
+
+.capacitacao-card {
+	background-color: var(--ade-white);
+	border-radius: var(--ade-radius-md);
+	padding: 42px 36px 38px;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	box-shadow: var(--ade-shadow-card);
+	border-bottom: 9px solid var(--ade-cyan);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.capacitacao-logo {
+	margin-bottom: 20px;
+	min-height: 62px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.capacitacao-desc {
+	color: var(--ade-blue-primary);
+	font-size: 0.96rem;
+	line-height: 1.55;
+	max-width: 320px;
+}
+
+/* ==========================================================================
+   12. EDITAIS (FILTER PILLS + CAROUSEL)
+   ========================================================================== */
+.section-editais {
+	background-color: var(--ade-aqua-bg);
+	padding: 80px 0 76px;
+	overflow: hidden;
+}
+
+.editais-subtitle {
+	max-width: 880px;
+}
+
+.editais-filters {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 40px;
+}
+
+.edital-filter-pill {
+	background-color: rgba(255, 255, 255, 0.55);
+	color: var(--ade-blue-primary);
+	border: 1.5px solid var(--ade-blue-primary);
+	border-radius: 7px;
+	padding: 8px 18px;
+	font-family: var(--ade-font-sans);
+	font-size: 0.82rem;
+	font-weight: 600;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all 0.18s ease;
+}
+
+.edital-filter-pill:hover,
+.edital-filter-pill.active {
+	background-color: var(--ade-blue-primary);
+	color: var(--ade-white);
+}
+
+.editais-carousel-viewport {
+	overflow: hidden;
+	padding: 8px 4px 18px;
+}
+
+.editais-carousel-track {
+	display: flex;
+	gap: 28px;
+	transition: transform 0.38s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.edital-card {
+	flex: 0 0 calc((100% - 56px) / 3);
+	min-width: 310px;
+	background-color: var(--ade-white);
+	border-radius: var(--ade-radius-lg);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 12px 28px rgba(20, 59, 125, 0.12);
+}
+
+.edital-card.is-filtered-out {
+	display: none;
+}
+
+.edital-card-top {
+	background-color: var(--ade-white);
+	padding: 26px 24px 0;
+	text-align: center;
+}
+
+.edital-card-logo {
+	min-height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 16px;
+}
+
+.edital-card-thumb {
+	border-radius: var(--ade-radius-md);
+	overflow: hidden;
+	height: 168px;
+	margin-bottom: -24px;
+	position: relative;
+	z-index: 2;
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.edital-card-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.edital-card-body {
+	background-color: var(--ade-blue-primary);
+	color: var(--ade-white);
+	padding: 46px 26px 30px;
+	text-align: center;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.edital-card-desc {
+	font-size: 0.92rem;
+	line-height: 1.55;
+	margin-bottom: 22px;
+	color: rgba(255, 255, 255, 0.95);
+}
+
+/* Carousel Bottom Controls */
+.editais-controls {
+	margin-top: 26px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.editais-arrows {
+	display: flex;
+	gap: 10px;
+}
+
+.carousel-arrow {
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	background-color: var(--ade-blue-primary);
+	color: var(--ade-white);
+	border: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.carousel-arrow:hover {
+	background-color: var(--ade-blue-dark);
+	transform: scale(1.05);
+}
+
+.editais-counter {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: var(--ade-blue-primary);
+}
+
+.counter-line {
+	display: inline-block;
+	width: 48px;
+	height: 2px;
+	background-color: var(--ade-blue-primary);
+}
+
+/* ==========================================================================
+   13. PRE-FOOTER CTA SECTION
+   ========================================================================== */
+.section-prefooter-cta {
+	background-color: var(--ade-ice-bg);
+	padding: 72px 0;
+}
+
+.prefooter-cta-title {
+	font-size: 2.05rem;
+	font-weight: 700;
+	color: var(--ade-blue-primary);
+	line-height: 1.28;
+	margin-bottom: 28px;
+}
+
+/* ==========================================================================
+   14. PÁGINA SOBRE (node-id=1224-20288)
+   ========================================================================== */
+.sobre-hero {
+	position: relative;
+	min-height: 580px;
+	padding-top: 120px;
+	padding-bottom: 60px;
+	display: flex;
+	align-items: center;
+	background-size: cover;
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+
+.sobre-hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(232, 239, 247, 0.92) 0%,
+		rgba(232, 239, 247, 0.72) 42%,
+		rgba(232, 239, 247, 0.15) 100%
+	);
+}
+
+.sobre-hero-container {
+	position: relative;
+	z-index: 2;
+}
+
+.sobre-hero-title {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	line-height: 1.08;
+	font-weight: 800;
+}
+
+.sobre-line-blue {
+	font-size: 3.35rem;
+	color: var(--ade-blue-primary);
+}
+
+.sobre-line-cyan {
+	font-size: 4rem;
+	color: var(--ade-cyan);
+	text-shadow: 0 2px 14px rgba(20, 59, 125, 0.15);
+}
+
+.sobre-content-section {
+	padding: 76px 0 92px;
+	background-color: var(--ade-white);
+}
+
+.sobre-row {
+	display: grid;
+	grid-template-columns: 320px 1fr;
+	gap: 48px;
+	align-items: center;
+	padding: 38px 0;
+}
+
+.sobre-row-intro {
+	align-items: flex-start;
+	padding-top: 10px;
+}
+
+.sobre-section-heading {
+	font-size: 2.2rem;
+	font-weight: 700;
+	color: var(--ade-blue-primary);
+}
+
+.sobre-col-text p {
+	font-size: 1.02rem;
+	line-height: 1.68;
+	color: var(--ade-blue-primary);
+}
+
+.sobre-col-text p + p {
+	margin-top: 18px;
+}
+
+.sobre-dotted-divider {
+	border: none;
+	border-top: 2px dotted var(--ade-blue-primary);
+	margin: 8px 0;
+	opacity: 0.7;
+}
+
+/* ==========================================================================
+   15. ARCHIVE / NOTÍCIAS / INTERNAL PAGES
+   ========================================================================== */
+.page-banner-simple {
+	background-color: var(--ade-ice-bg);
+	padding: 136px 0 56px;
+	text-align: center;
+}
+
+.archive-posts-section,
+.page-content-container {
+	padding: 64px 24px;
+}
+
+.posts-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 28px;
+}
+
+.news-card {
+	background: var(--ade-white);
+	border-radius: var(--ade-radius-md);
+	overflow: hidden;
+	box-shadow: var(--ade-shadow-card);
+	border: 1px solid #e2e8f0;
+	display: flex;
+	flex-direction: column;
+}
+
+.news-card-thumb img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.news-card-body {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.news-card-date {
+	font-size: 0.8rem;
+	color: var(--ade-blue-medium);
+	margin-bottom: 8px;
+}
+
+.news-card-title {
+	font-size: 1.25rem;
+	color: var(--ade-blue-primary);
+	margin-bottom: 12px;
+}
+
+.news-card-excerpt {
+	font-size: 0.94rem;
+	color: var(--ade-text-muted);
+	margin-bottom: 20px;
+	flex: 1;
+}
+
+.empty-state-box {
+	padding: 60px 24px;
+	background: var(--ade-ice-bg);
+	border-radius: var(--ade-radius-lg);
+}
+
+.empty-state-box h2 {
+	color: var(--ade-blue-primary);
+	margin-bottom: 12px;
+}
+
+.empty-state-box p {
+	color: var(--ade-blue-medium);
+	margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   16. SITE FOOTER
+   ========================================================================== */
+.site-footer {
+	background-color: var(--ade-blue-dark);
+	color: var(--ade-white);
+	padding: 68px 0 36px;
+}
+
+.footer-main {
+	display: grid;
+	grid-template-columns: 1.4fr 0.8fr 1fr 1fr;
+	gap: 40px;
+	padding-bottom: 48px;
+}
+
+.footer-logo-link {
+	display: inline-block;
+	margin-bottom: 18px;
+}
+
+.footer-address {
+	font-style: normal;
+	font-size: 0.92rem;
+	line-height: 1.6;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-heading {
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--ade-white);
+	margin-bottom: 16px;
+}
+
+.footer-links li + li {
+	margin-top: 8px;
+}
+
+.footer-links a {
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.88);
+}
+
+.footer-links a:hover {
+	color: var(--ade-cyan);
+}
+
+.footer-social-icons {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.social-btn {
+	width: 38px;
+	height: 38px;
+	border-radius: 8px;
+	background-color: var(--ade-white);
+	color: var(--ade-blue-dark);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.social-btn:hover {
+	background-color: var(--ade-cyan);
+	transform: translateY(-2px);
+}
+
+.footer-bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.35);
+	padding-top: 26px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.footer-copyright {
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-prefeitura {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.brasao-sp-img {
+	height: 46px;
+	width: auto;
+}
+
+.prefeitura-text {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.05;
+	color: var(--ade-white);
+}
+
+.prefeitura-line-1 {
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+}
+
+.prefeitura-line-2 {
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   17. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+	.header-container {
+		grid-template-columns: auto 1fr auto;
+		gap: 16px;
+	}
+
+	.atendimento-grid,
+	.espacos-panel-grid,
+	.produtos-grid,
+	.sobre-row {
+		grid-template-columns: 1fr;
+		gap: 36px;
+	}
+
+	.gestao-showcase {
+		flex-direction: column;
+	}
+
+	.gestao-photo-wrap,
+	.gestao-glass-card {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.gestao-glass-card {
+		margin-top: -28px;
+	}
+
+	.edital-card {
+		flex: 0 0 calc((100% - 28px) / 2);
+	}
+
+	.footer-main {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 768px) {
+	.mobile-menu-toggle {
+		display: flex;
+	}
+
+	.main-navigation {
+		position: fixed;
+		top: 82px;
+		left: 0;
+		right: 0;
+		background: rgba(255, 255, 255, 0.97);
+		padding: 24px;
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+		display: none;
+	}
+
+	.site-header.mobile-menu-open .main-navigation {
+		display: block;
+	}
+
+	.nav-list {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 14px;
+	}
+
+	.hero-title {
+		font-size: 2.2rem;
+	}
+
+	.espacos-blue-box {
+		padding: 36px 22px;
+	}
+
+	.espacos-tabs-nav {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.hubs-cyan-box {
+		padding: 32px 20px;
+	}
+
+	.hubs-cards-grid,
+	.capacitacoes-grid,
+	.posts-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.edital-card {
+		flex: 0 0 100%;
+	}
+
+	.sobre-line-blue {
+		font-size: 2.3rem;
+	}
+
+	.sobre-line-cyan {
+		font-size: 2.7rem;
+	}
+
+	.footer-main {
+		grid-template-columns: 1fr;
+	}
+
+	.footer-bottom {
+		flex-direction: column;
+		text-align: center;
+	}
+}
