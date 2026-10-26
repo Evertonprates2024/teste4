@@ -7,25 +7,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  verificar:
-    name: Verificar local do FTP
+  deploy:
+    name: Sincronizar tema via HTTPS
     runs-on: ubuntu-latest
     steps:
-      - name: 🔍 Checar pasta atual do FTP
+      - name: 🚚 Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: 📦 Compactar tema atualizado
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          zip -r /tmp/tema-ade-sampa.zip . -x ".git*" -x ".github*" -x "tema-ade-sampa.zip" -x "README.md"
 
-          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
-          set dns:order "inet"
-          set ftp:passive-mode true
-          set ftp:ssl-allow no
-          set net:timeout 15
+      - name: 🚀 Enviar para o WordPress na KingHost
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.DEPLOY_URL }}" \
+            -F "key=${{ secrets.DEPLOY_SECRET }}" \
+            -F "theme_zip=@/tmp/tema-ade-sampa.zip")
 
-          echo "=== 1. ONDE O SEU USUÁRIO FTP POUSA ==="
-          pwd
+          HTTP_BODY=$(echo "$RESPONSE" | sed '$d')
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n 1)
 
-          echo "=== 2. O QUE ELE ENXERGA NESSA PASTA ==="
-          ls
+          echo ">> Resposta do servidor KingHost (HTTP $HTTP_STATUS):"
+          echo "$HTTP_BODY"
 
-          quit
-          EOF
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "❌ Erro no deploy!"
+            exit 1
+          fi
+
+          echo "✅ Tema atualizado com sucesso no ar!"
