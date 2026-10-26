@@ -1,0 +1,27 @@
+name: Deploy Automático KingHost
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Sincronizar com KingHost via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: 🚀 Enviar arquivos para a KingHost
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: www/wp-content/themes/tema-ade-sampa/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/tema-ade-sampa.zip
+            README.md
