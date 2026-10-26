@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ADE_SAMPA_VERSION', '1.0.3' );
+define( 'ADE_SAMPA_VERSION', '1.0.4' );
 
 require_once get_template_directory() . '/inc/svg-logos.php';
 
@@ -18,6 +18,7 @@ require_once get_template_directory() . '/inc/svg-logos.php';
  */
 function ade_sampa_setup() {
 	add_theme_support( 'title-tag' );
+	add_theme_support( 'elementor' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support(
 		'html5',

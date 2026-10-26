@@ -11,6 +11,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+// Elementor compatibility: detect if edited with Elementor or previewing in Elementor editor
+if ( have_posts() ) {
+	the_post();
+}
+
+$is_elementor = false;
+if ( class_exists( '\Elementor\Plugin' ) ) {
+	$is_preview = \Elementor\Plugin::$instance->preview->is_preview_mode();
+	$is_editor  = \Elementor\Plugin::$instance->editor->is_edit_mode();
+	$doc        = \Elementor\Plugin::$instance->documents->get( get_the_ID() );
+	$is_built   = $doc ? $doc->is_built_with_elementor() : false;
+	if ( $is_preview || $is_editor || $is_built ) {
+		$is_elementor = true;
+	}
+}
+
+if ( isset( $_GET['elementor-preview'] ) || ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) ) {
+	$is_elementor = true;
+}
+
+if ( $is_elementor ) {
+	?>
+	<main id="primary" class="site-main elementor-fullwidth-main">
+		<?php the_content(); ?>
+	</main>
+	<?php
+	get_footer();
+	return;
+}
+
 $img_uri      = get_template_directory_uri() . '/assets/images/';
 $editais_data = ade_sampa_get_editais_data();
 ?>

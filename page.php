@@ -17,8 +17,33 @@ if ( is_page( 'sobre' ) ) {
 get_header();
 
 $is_noticias = is_page( 'noticias' ) || ( isset( $_GET['ade_page'] ) && 'noticias' === $_GET['ade_page'] );
+
+$is_elementor = false;
+if ( class_exists( '\Elementor\Plugin' ) ) {
+	$is_preview = \Elementor\Plugin::$instance->preview->is_preview_mode();
+	$is_editor  = \Elementor\Plugin::$instance->editor->is_edit_mode();
+	$doc        = \Elementor\Plugin::$instance->documents->get( get_the_ID() );
+	$is_built   = $doc ? $doc->is_built_with_elementor() : false;
+	if ( $is_preview || $is_editor || $is_built ) {
+		$is_elementor = true;
+	}
+}
+
+if ( isset( $_GET['elementor-preview'] ) || ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) ) {
+	$is_elementor = true;
+}
 ?>
 
+<?php if ( $is_elementor ) : ?>
+<main id="primary" class="site-main elementor-fullwidth-main">
+	<?php
+	while ( have_posts() ) :
+		the_post();
+		the_content();
+	endwhile;
+	?>
+</main>
+<?php else : ?>
 <main id="primary" class="site-main internal-page-main">
 	<?php
 	while ( have_posts() ) :
@@ -51,6 +76,7 @@ $is_noticias = is_page( 'noticias' ) || ( isset( $_GET['ade_page'] ) && 'noticia
 		</article>
 	<?php endwhile; ?>
 </main>
+<?php endif; ?>
 
 <?php
 get_footer();
