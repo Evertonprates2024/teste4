@@ -7,38 +7,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Sincronizar com KingHost via FTP
+  descobrir-pastas:
+    name: Identificar estrutura de pastas na KingHost
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Baixar código do repositório
-        uses: actions/checkout@v4
-
-      - name: 🚀 Sincronizar tema no WordPress
+      - name: 🔍 Listar diretórios do FTP
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
           lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
           set ftp:ssl-allow no
-          set net:timeout 30
-          set net:max-retries 3
+          set net:timeout 20
 
-          # 1. Navega até a pasta de temas existente do WordPress
-          cd www/wp-content/themes || cd wp-content/themes
+          echo "=== 1. PASTA RAIZ DO SEU FTP ==="
+          pwd
+          ls -la
 
-          # 2. Cria a pasta do tema (com permissão total concedida)
-          mkdir -p tema-ade-sampa
-
-          # 3. Entra na pasta do tema
-          cd tema-ade-sampa
-
-          # 4. Sincroniza todos os arquivos
-          mirror -R --verbose \
-            --exclude-glob .git* \
-            --exclude-glob .github* \
-            --exclude-glob tema-ade-sampa.zip \
-            --exclude-glob README.md \
-            ./ ./
+          echo "=== 2. LOCALIZANDO O WORDPRESS ==="
+          find -d 3 .
 
           quit
           EOF
