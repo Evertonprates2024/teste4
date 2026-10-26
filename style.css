@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.0.3
+Version: 2.0.4
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -317,6 +317,7 @@ button {
 	margin-right: auto;
 	padding-left: 24px;
 	padding-right: 24px;
+	position: relative;
 }
 
 .site-branding {
@@ -406,6 +407,166 @@ button {
 .nav-dropdown-menu li a:hover {
 	background-color: var(--ade-blue-light);
 	color: var(--ade-blue-primary);
+}
+
+/* ==========================================================================
+   MEGA MENU "PROGRAMAS" (FIGMA NODE 10-971)
+   ========================================================================== */
+.nav-item-mega {
+	position: static !important;
+}
+
+.mega-menu-dropdown {
+	position: absolute;
+	top: calc(100% + 12px);
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 48px);
+	max-width: 1040px;
+	background-color: var(--ade-white);
+	border-radius: var(--ade-radius-lg);
+	box-shadow: 0 20px 48px rgba(11, 25, 56, 0.14), 0 0 0 1px rgba(222, 236, 254, 0.7);
+	padding: 30px 32px 34px;
+	display: none;
+	z-index: 1010;
+	box-sizing: border-box;
+	animation: megaMenuDrop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes megaMenuDrop {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -8px);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+}
+
+.nav-item-has-dropdown.open .mega-menu-dropdown {
+	display: flex;
+}
+
+@media (min-width: 1025px) {
+	.nav-item-mega:hover .mega-menu-dropdown {
+		display: flex;
+	}
+	.nav-item-mega:hover .chevron-icon {
+		transform: rotate(180deg);
+	}
+}
+
+.mega-menu-left {
+	flex: 0 0 68%;
+	padding-right: 32px;
+	box-sizing: border-box;
+}
+
+.mega-menu-divider {
+	width: 1px;
+	background-color: #DEECFE;
+	align-self: stretch;
+	flex-shrink: 0;
+}
+
+.mega-menu-right {
+	flex: 0 0 32%;
+	padding-left: 32px;
+	box-sizing: border-box;
+}
+
+.mega-menu-section-header {
+	padding-bottom: 14px;
+	margin-bottom: 22px;
+	border-bottom: 1px solid #DEECFE;
+}
+
+.mega-menu-title {
+	font-family: var(--ade-font-heading);
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: #182771;
+	line-height: 1.2;
+}
+
+.mega-verticais-columns-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 16px;
+	align-items: flex-start;
+}
+
+.mega-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.mega-col-logo {
+	margin-bottom: 16px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+}
+
+.mega-col-logo img {
+	max-height: 29px;
+	width: auto;
+	object-fit: contain;
+	display: block;
+	transition: transform 0.2s ease;
+}
+
+.mega-col-logo a:hover img {
+	transform: scale(1.05);
+}
+
+.mega-col-links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.mega-col-links li a {
+	display: block;
+	font-family: var(--ade-font-body);
+	font-size: 0.84rem;
+	line-height: 1.35;
+	color: #474B57;
+	text-decoration: none;
+	padding: 0 !important;
+	box-shadow: none !important;
+	transition: color 0.18s ease;
+	font-weight: 400;
+}
+
+.mega-col-links li a:hover {
+	color: var(--ade-blue-primary) !important;
+	background: none !important;
+	text-decoration: underline;
+}
+
+.mega-plataformas-groups {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.mega-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.mega-group-title {
+	font-family: var(--ade-font-heading);
+	font-size: 0.96rem;
+	font-weight: 700;
+	color: var(--ade-blue-navy);
+	margin-bottom: 8px;
+	line-height: 1.2;
 }
 
 .header-actions {
@@ -1297,6 +1458,48 @@ button {
 		border-radius: 4px;
 	}
 
+	/* Mega Menu no Tablet e Mobile */
+	.mega-menu-dropdown {
+		position: static;
+		transform: none;
+		width: 100%;
+		max-width: 100%;
+		box-shadow: none;
+		border: 1px solid #DEECFE;
+		background-color: #F8FAFC;
+		border-radius: var(--ade-radius-md);
+		padding: 20px 16px;
+		margin-top: 8px;
+		margin-bottom: 12px;
+		flex-direction: column;
+		gap: 24px;
+	}
+
+	.nav-item-has-dropdown.open .mega-menu-dropdown {
+		display: flex;
+	}
+
+	.mega-menu-left,
+	.mega-menu-right {
+		flex: 1 1 100%;
+		padding: 0;
+	}
+
+	.mega-menu-divider {
+		width: 100%;
+		height: 1px;
+	}
+
+	.mega-verticais-columns-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px 14px;
+	}
+
+	.mega-col-links li a {
+		font-size: 0.86rem;
+		padding: 4px 0 !important;
+	}
+
 	.nav-item-mobile-cta {
 		display: block;
 		margin-top: 14px;
@@ -1541,6 +1744,11 @@ button {
 		padding: 7px 12px;
 		font-size: 0.78rem;
 		font-weight: 700;
+	}
+
+	.mega-verticais-columns-grid {
+		grid-template-columns: 1fr;
+		gap: 18px;
 	}
 
 	.hero-section {

@@ -46,20 +46,140 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<li class="nav-item">
 						<a href="<?php echo esc_url( home_url( '/sobre/' ) ); ?>"><?php esc_html_e( 'Sobre', 'tema-ade-sampa' ); ?></a>
 					</li>
-					<li class="nav-item nav-item-has-dropdown" id="nav-programas">
-						<button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="submenu-programas">
+					<li class="nav-item nav-item-has-dropdown nav-item-mega" id="nav-programas">
+						<button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="megamenu-programas">
 							<span><?php esc_html_e( 'Programas', 'tema-ade-sampa' ); ?></span>
 							<svg class="chevron-icon" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 							</svg>
 						</button>
-						<ul class="nav-dropdown-menu" id="submenu-programas">
-							<li><a href="#verticais"><?php esc_html_e( 'Sampa Empreende', 'tema-ade-sampa' ); ?></a></li>
-							<li><a href="#verticais"><?php esc_html_e( 'Sampa Tech', 'tema-ade-sampa' ); ?></a></li>
-							<li><a href="#verticais"><?php esc_html_e( 'Sampa Games', 'tema-ade-sampa' ); ?></a></li>
-							<li><a href="#verticais"><?php esc_html_e( 'Sampa Verde', 'tema-ade-sampa' ); ?></a></li>
-							<li><a href="#verticais"><?php esc_html_e( 'Sampa Criativa', 'tema-ade-sampa' ); ?></a></li>
-						</ul>
+
+						<!-- MEGA MENU PROGRAMAS (FIGMA NODE 10-971) -->
+						<div class="mega-menu-dropdown" id="megamenu-programas" role="region" aria-label="<?php esc_attr_e( 'Menu de Programas', 'tema-ade-sampa' ); ?>">
+							<!-- Seção Esquerda: Verticais de atuação (68%) -->
+							<div class="mega-menu-left">
+								<div class="mega-menu-section-header">
+									<h3 class="mega-menu-title"><?php esc_html_e( 'Verticais de atuação', 'tema-ade-sampa' ); ?></h3>
+								</div>
+
+								<div class="mega-verticais-columns-grid">
+									<!-- 1. Sampa Empreende -->
+									<div class="mega-col mega-col-empreende">
+										<div class="mega-col-logo">
+											<a href="<?php echo esc_url( home_url( '/#sampa-empreende' ) ); ?>" aria-label="Sampa Empreende">
+												<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-mini-sampa-empreende.png' ); ?>" alt="Sampa Empreende" width="89" height="29" loading="lazy">
+											</a>
+										</div>
+										<ul class="mega-col-links">
+											<li><a href="#atendimento"><?php esc_html_e( 'Atendimento', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#orientacao-empresarial"><?php esc_html_e( 'Orientação empresarial', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#linhas-credito"><?php esc_html_e( 'Linhas de crédito', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#educacao-financeira"><?php esc_html_e( 'Educação financeira', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#consultoria-gestao"><?php esc_html_e( 'Consultoria em gestão financeira', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#fabrica-negocios"><?php esc_html_e( 'Curso fábrica de negócios', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#gestao-negocios"><?php esc_html_e( 'Curso de gestão de negócios', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- 2. Sampa Tech -->
+									<div class="mega-col mega-col-tech">
+										<div class="mega-col-logo">
+											<a href="<?php echo esc_url( home_url( '/#sampa-tech' ) ); ?>" aria-label="Sampa Tech">
+												<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-mini-sampa-tech.png' ); ?>" alt="Sampa Tech" width="72" height="29" loading="lazy">
+											</a>
+										</div>
+										<ul class="mega-col-links">
+											<li><a href="#vai-tec"><?php esc_html_e( 'Aceleração Vai Tec', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-ia"><?php esc_html_e( 'Hub de inovação em inteligência artificial', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- 3. Sampa Games -->
+									<div class="mega-col mega-col-games">
+										<div class="mega-col-logo">
+											<a href="<?php echo esc_url( home_url( '/#sampa-games' ) ); ?>" aria-label="Sampa Games">
+												<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-mini-sampa-games.png' ); ?>" alt="Sampa Games" width="71" height="29" loading="lazy">
+											</a>
+										</div>
+										<ul class="mega-col-links">
+											<li><a href="#aceleracao-estudios"><?php esc_html_e( 'Aceleração de estúdios', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#curso-game-dev"><?php esc_html_e( 'Curso de game dev', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-educacao"><?php esc_html_e( 'Hub de educação', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- 4. Sampa Verde -->
+									<div class="mega-col mega-col-verde">
+										<div class="mega-col-logo">
+											<a href="<?php echo esc_url( home_url( '/#sampa-verde' ) ); ?>" aria-label="Sampa Verde">
+												<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-mini-sampa-verde.png' ); ?>" alt="Sampa Verde" width="72" height="29" loading="lazy">
+											</a>
+										</div>
+										<ul class="mega-col-links">
+											<li><a href="#negocios-rurais"><?php esc_html_e( 'Aceleração de negócios rurais', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#aceleracao-hortas"><?php esc_html_e( 'Aceleração de hortas', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#negocios-verdes"><?php esc_html_e( 'Aceleração de negócios verdes', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-inovacao"><?php esc_html_e( 'Hub de inovação', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- 5. Sampa Criativa -->
+									<div class="mega-col mega-col-criativa">
+										<div class="mega-col-logo">
+											<a href="<?php echo esc_url( home_url( '/#sampa-criativa' ) ); ?>" aria-label="Sampa Criativa">
+												<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-mini-sampa-criativa.png' ); ?>" alt="Sampa Criativa" width="72" height="29" loading="lazy">
+											</a>
+										</div>
+										<ul class="mega-col-links">
+											<li><a href="#aceleracao-audiovisual"><?php esc_html_e( 'Aceleração de audiovisual', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#aceleracao-moda"><?php esc_html_e( 'Aceleração de moda', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-formacao-audiovisual"><?php esc_html_e( 'Hub de formação em audiovisual', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<!-- Linha Divisória Vertical -->
+							<div class="mega-menu-divider" aria-hidden="true"></div>
+
+							<!-- Seção Direita: Plataformas e espaços (32%) -->
+							<div class="mega-menu-right">
+								<div class="mega-menu-section-header">
+									<h3 class="mega-menu-title"><?php esc_html_e( 'Plataformas e espaços', 'tema-ade-sampa' ); ?></h3>
+								</div>
+
+								<div class="mega-plataformas-groups">
+									<!-- Grupo 1: Teia -->
+									<div class="mega-group">
+										<h4 class="mega-group-title"><?php esc_html_e( 'Teia', 'tema-ade-sampa' ); ?></h4>
+										<ul class="mega-col-links">
+											<li><a href="#teia-coworking"><?php esc_html_e( 'Coworking público', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#teia-podcast"><?php esc_html_e( 'Estúdio de podcast', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#teia-fotografia"><?php esc_html_e( 'Estúdio de fotografia', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#teia-musica"><?php esc_html_e( 'Estúdio de música', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- Grupo 2: Produtos digitais -->
+									<div class="mega-group">
+										<h4 class="mega-group-title"><?php esc_html_e( 'Produtos digitais', 'tema-ade-sampa' ); ?></h4>
+										<ul class="mega-col-links">
+											<li><a href="#sampa-ensina"><?php esc_html_e( 'Sampa Ensina', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#gestao-sampa"><?php esc_html_e( 'Gestão Sampa', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#data-sampa"><?php esc_html_e( 'Data Sampa', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+
+									<!-- Grupo 3: Praça Victor Civita -->
+									<div class="mega-group">
+										<h4 class="mega-group-title"><?php esc_html_e( 'Praça Victor Civita', 'tema-ade-sampa' ); ?></h4>
+										<ul class="mega-col-links">
+											<li><a href="#praca-civita"><?php esc_html_e( 'Conhecer equipamentos', 'tema-ade-sampa' ); ?></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
 					</li>
 					<li class="nav-item nav-item-has-dropdown" id="nav-imprensa">
 						<button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="submenu-imprensa">
