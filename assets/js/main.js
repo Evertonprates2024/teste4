@@ -1,175 +1,153 @@
 /**
- * ADE SAMPA 2025 Theme Interactive Scripts
- * - Transparência Dropdown Navigation
+ * ADE SAMPA 2025 Theme Interactive Scripts (Vanilla ES6+)
+ * - Header Dropdown Menus (Programas, Imprensa)
  * - Mobile Navigation Drawer
- * - Espaços de Trabalho Tabs (Teia, Sampa Cast, Sampa Audio, Sampa Estúdio)
- * - Editais Category Filter Pills & Carousel Slider (1 --- 12)
+ * - Destaques e Oportunidades Native Carousel (Prev/Next, Dots, Touch Swipe)
+ *
+ * @package Tema_ADE_Sampa
  */
 (function () {
 	'use strict';
 
 	document.addEventListener('DOMContentLoaded', function () {
 		/* ==========================================================================
-		   1. TRANSPARÊNCIA DROPDOWN & MOBILE MENU
+		   1. HEADER DROPDOWNS (PROGRAMAS & IMPRENSA)
 		   ========================================================================== */
-		var dropdownItem = document.getElementById('nav-transparencia');
-		var dropdownBtn = dropdownItem ? dropdownItem.querySelector('.nav-dropdown-toggle') : null;
+		var dropdownItems = document.querySelectorAll('.nav-item-has-dropdown');
 
-		if (dropdownItem && dropdownBtn) {
-			dropdownBtn.addEventListener('click', function (e) {
+		dropdownItems.forEach(function (item) {
+			var btn = item.querySelector('.nav-dropdown-toggle');
+			if (!btn) return;
+
+			btn.addEventListener('click', function (e) {
+				e.preventDefault();
 				e.stopPropagation();
-				var isOpen = dropdownItem.classList.toggle('open');
-				dropdownBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-			});
 
-			document.addEventListener('click', function (e) {
-				if (!dropdownItem.contains(e.target)) {
-					dropdownItem.classList.remove('open');
-					dropdownBtn.setAttribute('aria-expanded', 'false');
+				// Fecha outros abertos
+				dropdownItems.forEach(function (other) {
+					if (other !== item) {
+						other.classList.remove('open');
+						var otherBtn = other.querySelector('.nav-dropdown-toggle');
+						if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+					}
+				});
+
+				var isOpen = item.classList.toggle('open');
+				btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+			});
+		});
+
+		// Fecha dropdown ao clicar fora ou pressionar ESC
+		document.addEventListener('click', function (e) {
+			dropdownItems.forEach(function (item) {
+				if (!item.contains(e.target)) {
+					item.classList.remove('open');
+					var btn = item.querySelector('.nav-dropdown-toggle');
+					if (btn) btn.setAttribute('aria-expanded', 'false');
 				}
 			});
+		});
 
-			document.addEventListener('keydown', function (e) {
-				if (e.key === 'Escape') {
-					dropdownItem.classList.remove('open');
-					dropdownBtn.setAttribute('aria-expanded', 'false');
-				}
-			});
-		}
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') {
+				dropdownItems.forEach(function (item) {
+					item.classList.remove('open');
+					var btn = item.querySelector('.nav-dropdown-toggle');
+					if (btn) btn.setAttribute('aria-expanded', 'false');
+				});
+			}
+		});
 
+		/* ==========================================================================
+		   2. MENU MOBILE TOGGLE
+		   ========================================================================== */
 		var mobileToggle = document.getElementById('mobile-menu-toggle');
 		var siteHeader = document.getElementById('masthead');
+
 		if (mobileToggle && siteHeader) {
 			mobileToggle.addEventListener('click', function () {
-				var expanded = siteHeader.classList.toggle('mobile-menu-open');
-				mobileToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+				var isOpen = siteHeader.classList.toggle('mobile-menu-open');
+				mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 			});
 		}
 
 		/* ==========================================================================
-		   2. ESPAÇOS DE TRABALHO INTERACTIVE TABS
+		   3. CARROSSEL DE DESTAQUES E OPORTUNIDADES
 		   ========================================================================== */
-		var tabButtons = document.querySelectorAll('.espacos-tab-btn');
-		var tabPanels = document.querySelectorAll('.espacos-tab-panel');
-
-		if (tabButtons.length && tabPanels.length) {
-			tabButtons.forEach(function (btn) {
-				btn.addEventListener('click', function () {
-					var targetTab = btn.getAttribute('data-tab');
-
-					tabButtons.forEach(function (b) {
-						var isCurrent = b === btn;
-						b.classList.toggle('active', isCurrent);
-						b.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
-					});
-
-					tabPanels.forEach(function (panel) {
-						var isMatch = panel.getAttribute('data-panel') === targetTab;
-						if (isMatch) {
-							panel.removeAttribute('hidden');
-							panel.classList.add('active');
-						} else {
-							panel.setAttribute('hidden', 'hidden');
-							panel.classList.remove('active');
-						}
-					});
-				});
-			});
-		}
-
-		/* ==========================================================================
-		   3. EDITAIS CATEGORY FILTER PILLS & CAROUSEL SLIDER
-		   ========================================================================== */
-		var filterPills = document.querySelectorAll('.edital-filter-pill');
-		var track = document.getElementById('editais-track');
-		var prevBtn = document.getElementById('edital-prev');
-		var nextBtn = document.getElementById('edital-next');
-		var currentNumEl = document.getElementById('edital-current-num');
-		var totalNumEl = document.getElementById('edital-total-num');
+		var track = document.getElementById('oportunidades-track');
+		var prevBtn = document.getElementById('oportunidades-prev');
+		var nextBtn = document.getElementById('oportunidades-next');
+		var dotsContainer = document.getElementById('oportunidades-dots');
 
 		if (track) {
-			var allCards = Array.prototype.slice.call(track.querySelectorAll('.edital-card'));
+			var cards = track.querySelectorAll('.oportunidade-card');
+			var dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
 			var currentIndex = 0;
+			var totalCards = cards.length;
 
-			function getVisibleCards() {
-				return allCards.filter(function (c) {
-					return !c.classList.contains('is-filtered-out');
+			function updateCarousel(index) {
+				if (index < 0) index = 0;
+				if (index >= totalCards) index = totalCards - 1;
+				currentIndex = index;
+
+				// Scroll do viewport
+				if (cards[currentIndex]) {
+					var cardLeft = cards[currentIndex].offsetLeft;
+					track.scrollTo({
+						left: cardLeft,
+						behavior: 'smooth'
+					});
+				}
+
+				// Atualiza visual dos dots
+				dots.forEach(function (dot, i) {
+					if (i === currentIndex) {
+						dot.classList.add('active');
+						dot.setAttribute('aria-selected', 'true');
+					} else {
+						dot.classList.remove('active');
+						dot.setAttribute('aria-selected', 'false');
+					}
 				});
 			}
-
-			function updateCarousel() {
-				var visibleCards = getVisibleCards();
-				var total = visibleCards.length;
-
-				if (currentIndex >= total) {
-					currentIndex = Math.max(0, total - 1);
-				}
-				if (currentIndex < 0) {
-					currentIndex = 0;
-				}
-
-				if (visibleCards.length > 0) {
-					var firstCard = visibleCards[0];
-					var cardStyle = window.getComputedStyle(firstCard);
-					var cardWidth = firstCard.offsetWidth;
-					var gap = parseFloat(window.getComputedStyle(track).gap) || 28;
-					var maxScrollIndex = Math.max(0, total - 1);
-					var clampedIndex = Math.min(currentIndex, maxScrollIndex);
-					var offset = clampedIndex * (cardWidth + gap);
-					track.style.transform = 'translateX(-' + offset + 'px)';
-				} else {
-					track.style.transform = 'translateX(0px)';
-				}
-
-				if (currentNumEl) {
-					currentNumEl.textContent = total > 0 ? String(currentIndex + 1) : '0';
-				}
-				if (totalNumEl) {
-					totalNumEl.textContent = String(total);
-				}
-			}
-
-			filterPills.forEach(function (pill) {
-				pill.addEventListener('click', function () {
-					var selectedCat = pill.getAttribute('data-filter');
-
-					filterPills.forEach(function (p) {
-						var active = p === pill;
-						p.classList.toggle('active', active);
-						p.setAttribute('aria-selected', active ? 'true' : 'false');
-					});
-
-					allCards.forEach(function (card) {
-						var cardCat = card.getAttribute('data-category');
-						var show = selectedCat === 'GERAL' || cardCat === selectedCat;
-						card.classList.toggle('is-filtered-out', !show);
-					});
-
-					currentIndex = 0;
-					updateCarousel();
-				});
-			});
 
 			if (prevBtn) {
 				prevBtn.addEventListener('click', function () {
-					var visibleCards = getVisibleCards();
-					if (visibleCards.length === 0) return;
-					currentIndex = currentIndex > 0 ? currentIndex - 1 : visibleCards.length - 1;
-					updateCarousel();
+					updateCarousel(currentIndex - 1);
 				});
 			}
 
 			if (nextBtn) {
 				nextBtn.addEventListener('click', function () {
-					var visibleCards = getVisibleCards();
-					if (visibleCards.length === 0) return;
-					currentIndex = currentIndex < visibleCards.length - 1 ? currentIndex + 1 : 0;
-					updateCarousel();
+					updateCarousel(currentIndex + 1);
 				});
 			}
 
-			window.addEventListener('resize', updateCarousel);
-			updateCarousel();
+			dots.forEach(function (dot, i) {
+				dot.addEventListener('click', function () {
+					updateCarousel(i);
+				});
+			});
+
+			// Suporte a Touch Swipe em Mobile
+			var startX = 0;
+			var endX = 0;
+
+			track.addEventListener('touchstart', function (e) {
+				startX = e.changedTouches[0].screenX;
+			}, { passive: true });
+
+			track.addEventListener('touchend', function (e) {
+				endX = e.changedTouches[0].screenX;
+				var diff = startX - endX;
+				if (Math.abs(diff) > 40) {
+					if (diff > 0) {
+						updateCarousel(currentIndex + 1);
+					} else {
+						updateCarousel(currentIndex - 1);
+					}
+				}
+			}, { passive: true });
 		}
 	});
 })();

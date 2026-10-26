@@ -1,6 +1,7 @@
 <?php
 /**
- * The Front Page template file (Home - Site ADE SAMPA 2025)
+ * The Front Page template file (Home - Portal ADE SAMPA 2025)
+ * Atualizado com base no novo mockup oficial do Figma
  *
  * @package Tema_ADE_Sampa
  */
@@ -11,13 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-// Elementor compatibility: detect if edited with Elementor or previewing in Elementor editor
+// Compatibilidade inteligente com o Elementor
 if ( have_posts() ) {
 	the_post();
 }
 
-// Elementor compatibility: check if page has actual Elementor widgets or is inside the editor
-$elementor_data = get_post_meta( get_the_ID(), '_elementor_data', true );
+$elementor_data        = get_post_meta( get_the_ID(), '_elementor_data', true );
 $has_elementor_content = ! empty( $elementor_data ) && '[]' !== trim( $elementor_data );
 
 $is_elementor_editor = false;
@@ -33,7 +33,6 @@ if ( isset( $_GET['elementor-preview'] ) || ( isset( $_GET['action'] ) && 'eleme
 	$is_elementor_editor = true;
 }
 
-// Only replace the full Figma site if the editor is active OR if real Elementor widgets were built and published
 if ( $is_elementor_editor || $has_elementor_content ) {
 	?>
 	<main id="primary" class="site-main elementor-fullwidth-main">
@@ -44,8 +43,7 @@ if ( $is_elementor_editor || $has_elementor_content ) {
 	return;
 }
 
-$img_uri      = get_template_directory_uri() . '/assets/images/';
-$editais_data = ade_sampa_get_editais_data();
+$img_uri = get_template_directory_uri() . '/assets/images/';
 ?>
 
 <main id="primary" class="site-main home-main">
@@ -53,462 +51,381 @@ $editais_data = ade_sampa_get_editais_data();
 	<!-- =====================================================================
 	     1. HERO SECTION
 	     ===================================================================== -->
-	<section class="hero-section" style="background-image: url('<?php echo esc_url( $img_uri . 'hero-bg.jpg' ); ?>');">
-		<div class="hero-overlay"></div>
-
-		<!-- Decorative Cyan Plus Grid (Bottom Left) -->
-		<div class="hero-deco-plus" aria-hidden="true"></div>
-
-		<div class="container hero-content">
-			<p class="hero-kicker">AGÊNCIA SÃO PAULO DE DESENVOLVIMENTO</p>
+	<section class="hero-section" id="hero">
+		<div class="container hero-container text-center">
+			<span class="pill-badge pill-badge-blue"><?php esc_html_e( 'DESENVOLVIMENTO ECONÔMICO', 'tema-ade-sampa' ); ?></span>
 			<h1 class="hero-title">
-				Apoiando o empreendedorismo e<br>
-				criando oportunidades na cidade<br>
-				de São Paulo
+				<?php esc_html_e( 'Fomentando o futuro dos', 'tema-ade-sampa' ); ?><br>
+				<?php esc_html_e( 'negócios em São Paulo', 'tema-ade-sampa' ); ?>
 			</h1>
-			<div class="hero-buttons">
-				<a href="#cadastro" class="btn btn-primary btn-lg">Cadastre-se</a>
-				<a href="#entrar" class="btn btn-outline-light btn-lg">Entrar</a>
+			<p class="hero-subtitle">
+				<?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'tema-ade-sampa' ); ?>
+			</p>
+			<div class="hero-cta-wrap">
+				<a href="#sobre" class="btn btn-primary btn-lg"><?php esc_html_e( 'Conheça a ADE SAMPA', 'tema-ade-sampa' ); ?></a>
 			</div>
 		</div>
-
-		<!-- Decorative Blue Dots Grid (Bottom Right) -->
-		<div class="hero-deco-dots" aria-hidden="true"></div>
 	</section>
 
 	<!-- =====================================================================
-	     2. ATENDIMENTO AO EMPREENDEDOR
+	     2. NOSSAS VERTICAIS DE ATUAÇÃO
 	     ===================================================================== -->
-	<section class="section-atendimento" id="atendimento">
+	<section class="section-verticais" id="verticais">
 		<div class="container">
 			<header class="section-header text-center">
-				<h2 class="section-title">ATENDIMENTO AO EMPREENDEDOR</h2>
+				<h2 class="section-title"><?php esc_html_e( 'Nossas verticais de atuação', 'tema-ade-sampa' ); ?></h2>
 				<p class="section-subtitle">
-					Orientação sobre formalização, regularização e desenvolvimento de negócios
+					<?php esc_html_e( 'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'tema-ade-sampa' ); ?>
 				</p>
 			</header>
 
-			<div class="atendimento-grid">
-				<!-- Left Column: 2x2 Photo Collage + Caption + CTA -->
-				<div class="atendimento-photos-col">
-					<div class="photo-collage-2x2">
-						<img src="<?php echo esc_url( $img_uri . 'teia-1.png' ); ?>" alt="Unidade de atendimento ADE SAMPA 1" />
-						<img src="<?php echo esc_url( $img_uri . 'teia-2.png' ); ?>" alt="Unidade de atendimento ADE SAMPA 2" />
-						<img src="<?php echo esc_url( $img_uri . 'teia-3.jpg' ); ?>" alt="Unidade de atendimento ADE SAMPA 3" />
-						<img src="<?php echo esc_url( $img_uri . 'teia-4.jpg' ); ?>" alt="Unidade de atendimento ADE SAMPA 4" />
+			<div class="verticais-grid">
+				<!-- 1. Sampa Empreende -->
+				<a href="#sampa-empreende" class="vertical-card card-empreende" aria-label="Sampa Empreende">
+					<div class="vertical-card-bg-shape"></div>
+					<div class="vertical-card-content">
+						<span class="vertical-brand-small">sampa</span>
+						<span class="vertical-brand-large">EMPREENDE</span>
 					</div>
-					<p class="atendimento-unidades-text">
-						Mais de 40 unidades em todas as regiões de São Paulo.
-					</p>
-					<div class="atendimento-btn-wrap">
-						<a href="#unidades" class="btn btn-primary">Encontre a mais próxima</a>
-					</div>
-				</div>
+				</a>
 
-				<!-- Right Column: Contrata SP & Descomplica SP -->
-				<div class="atendimento-programs-col">
-					<div class="program-item">
-						<div class="program-logo-wrap">
-							<?php echo ade_sampa_get_logo( 'contrata-sp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						</div>
-						<p class="program-description">
-							Conecta micro e pequenos empreendedores a oportunidades de negócios, promovendo a inclusão produtiva e o aumento de renda.
-						</p>
+				<!-- 2. Sampa Tech -->
+				<a href="#sampa-tech" class="vertical-card card-tech" aria-label="Sampa Tech">
+					<div class="vertical-card-bg-shape"></div>
+					<div class="vertical-card-content">
+						<span class="vertical-brand-small">sampa</span>
+						<span class="vertical-brand-large">TECH</span>
 					</div>
+				</a>
 
-					<hr class="cyan-divider" />
-
-					<div class="program-item">
-						<div class="program-logo-wrap">
-							<?php echo ade_sampa_get_logo( 'descomplica-sp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						</div>
-						<p class="program-description">
-							Atendimento presencial para orientação sobre formalização, regularização, acesso a crédito e programas de apoio ao empreendedorismo.
-						</p>
+				<!-- 3. Sampa Games -->
+				<a href="#sampa-games" class="vertical-card card-games" aria-label="Sampa Games">
+					<div class="vertical-card-bg-shape"></div>
+					<div class="vertical-card-content">
+						<span class="vertical-brand-small">sampa</span>
+						<span class="vertical-brand-large">GAMES</span>
 					</div>
+				</a>
 
-					<div class="atendimento-btn-wrap">
-						<a href="#iniciativas" class="btn btn-primary">Conheça todas as iniciativas</a>
+				<!-- 4. Sampa Verde -->
+				<a href="#sampa-verde" class="vertical-card card-verde" aria-label="Sampa Verde">
+					<div class="vertical-card-bg-shape"></div>
+					<div class="vertical-card-content">
+						<span class="vertical-brand-small">sampa</span>
+						<span class="vertical-brand-large">VERDE</span>
 					</div>
-				</div>
+				</a>
+
+				<!-- 5. Sampa Criativa -->
+				<a href="#sampa-criativa" class="vertical-card card-criativa" aria-label="Sampa Criativa">
+					<div class="vertical-card-bg-shape"></div>
+					<div class="vertical-card-content">
+						<span class="vertical-brand-small">sampa</span>
+						<span class="vertical-brand-large">CRIATIVA</span>
+					</div>
+				</a>
 			</div>
 		</div>
 	</section>
 
 	<!-- =====================================================================
-	     3. ESPAÇOS DE TRABALHO & HUB'S DE INOVAÇÃO
+	     3. DESTAQUES E OPORTUNIDADES (CARROSSEL NATIVO)
 	     ===================================================================== -->
-	<section class="section-espacos-wrapper" id="espacos">
+	<section class="section-oportunidades" id="oportunidades">
 		<div class="container">
-			<div class="espacos-blue-box">
-				<header class="section-header section-header-light text-center">
-					<h2 class="section-title">Espaços de trabalho</h2>
-					<p class="section-subtitle">
-						Infraestrutura completa para impulsionar o trabalho empreendedor, além de<br>
-						cursos, oficinas, eventos e ampliação das redes de contato
-					</p>
-				</header>
-
-				<!-- Interactive Tabs Navigation -->
-				<div class="espacos-tabs-nav" role="tablist" aria-label="Espaços de trabalho da ADE SAMPA">
-					<button type="button" class="espacos-tab-btn active" role="tab" aria-selected="true" aria-controls="tab-panel-teia" id="tab-btn-teia" data-tab="teia">
-						Teia
-					</button>
-					<button type="button" class="espacos-tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel-sampacast" id="tab-btn-sampacast" data-tab="sampacast">
-						Sampa Cast
-					</button>
-					<button type="button" class="espacos-tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel-sampaaudio" id="tab-btn-sampaaudio" data-tab="sampaaudio">
-						Sampa Audio
-					</button>
-					<button type="button" class="espacos-tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel-sampaestudio" id="tab-btn-sampaestudio" data-tab="sampaestudio">
-						Sampa Estúdio
-					</button>
-				</div>
-
-				<!-- Tab Panel 1: TEIA -->
-				<div class="espacos-tab-panel active" id="tab-panel-teia" role="tabpanel" aria-labelledby="tab-btn-teia" data-panel="teia">
-					<div class="espacos-panel-grid">
-						<div class="espacos-media photo-collage-2x2">
-							<img src="<?php echo esc_url( $img_uri . 'teia-1.png' ); ?>" alt="Espaço Colaborativo TEIA 1" />
-							<img src="<?php echo esc_url( $img_uri . 'teia-2.png' ); ?>" alt="Espaço Colaborativo TEIA 2" />
-							<img src="<?php echo esc_url( $img_uri . 'teia-4.jpg' ); ?>" alt="Espaço Colaborativo TEIA 3" />
-							<img src="<?php echo esc_url( $img_uri . 'teia-5.jpg' ); ?>" alt="Espaço Colaborativo TEIA 4" />
-						</div>
-						<div class="espacos-info">
-							<div class="espacos-logo">
-								<?php echo ade_sampa_get_logo( 'teia' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="espacos-desc">
-								Os Espaços de Trabalho Colaborativos estão localizados em todas as regiões da cidade de São Paulo. Os TEIAs oferecem estações de trabalho com computadores, internet sem fio e salas de reunião, além de uma programação mensal com cursos, oficinas, encontros de networking, feiras e palestras de qualificação empreendedora.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Tab Panel 2: SAMPA CAST -->
-				<div class="espacos-tab-panel" id="tab-panel-sampacast" role="tabpanel" aria-labelledby="tab-btn-sampacast" data-panel="sampacast" hidden>
-					<div class="espacos-panel-grid">
-						<div class="espacos-media photo-collage-2col">
-							<img src="<?php echo esc_url( $img_uri . 'sampacast-1.jpg' ); ?>" alt="Estúdio Sampa Cast 1" />
-							<img src="<?php echo esc_url( $img_uri . 'sampacast-2.jpg' ); ?>" alt="Estúdio Sampa Cast 2" />
-						</div>
-						<div class="espacos-info">
-							<div class="espacos-logo">
-								<?php echo ade_sampa_get_logo( 'sampacast' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="espacos-desc">
-								Estúdios gratuitos para gravação de podcasts com equipamentos profissionais e equipe técnica qualificada, pronta para auxiliar na produção dos materiais. É voltado para a criação de conteúdos do universo empreendedor em diversos formatos além de podcasts, como vídeo conteúdo, web séries e entrevistas.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Tab Panel 3: SAMPA AUDIO -->
-				<div class="espacos-tab-panel" id="tab-panel-sampaaudio" role="tabpanel" aria-labelledby="tab-btn-sampaaudio" data-panel="sampaaudio" hidden>
-					<div class="espacos-panel-grid">
-						<div class="espacos-media photo-collage-2col">
-							<img src="<?php echo esc_url( $img_uri . 'sampaaudio-1.jpg' ); ?>" alt="Estúdio Sampa Áudio 1" />
-							<img src="<?php echo esc_url( $img_uri . 'sampaaudio-2.jpg' ); ?>" alt="Estúdio Sampa Áudio 2" />
-						</div>
-						<div class="espacos-info">
-							<div class="espacos-logo">
-								<?php echo ade_sampa_get_logo( 'sampaaudio' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="espacos-desc">
-								Estúdio equipado para gravações de músicas, locuções e produções sonoras em geral, com estrutura de ponta e suporte técnico especializado para produções de áudio com qualidade profissional.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Tab Panel 4: SAMPA ESTÚDIO -->
-				<div class="espacos-tab-panel" id="tab-panel-sampaestudio" role="tabpanel" aria-labelledby="tab-btn-sampaestudio" data-panel="sampaestudio" hidden>
-					<div class="espacos-panel-grid">
-						<div class="espacos-media photo-collage-single">
-							<img src="<?php echo esc_url( $img_uri . 'sampaestudio-1.png' ); ?>" alt="Sampa Estúdio Audiovisual" />
-						</div>
-						<div class="espacos-info">
-							<div class="espacos-logo">
-								<?php echo ade_sampa_get_logo( 'sampaestudio' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="espacos-desc">
-								Estrutura completa com cenário, iluminação profissional e suporte técnico para produções audiovisuais, como vídeos institucionais e conteúdos multiplataformas.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Nested Cyan Box: HUB's de inovação -->
-				<div class="hubs-cyan-box">
-					<header class="section-header text-center">
-						<h3 class="section-title hubs-title">HUB's de inovação</h3>
-						<p class="section-subtitle hubs-subtitle">
-							Espaços públicos voltados para o fortalecimento de negócios de sustentabilidade<br>
-							e da indústria criativa
-						</p>
-					</header>
-
-					<div class="hubs-cards-grid">
-						<!-- HUB Green Sampa -->
-						<article class="hub-white-card">
-							<div class="hub-card-logo">
-								<?php echo ade_sampa_get_logo( 'hub-greensampa' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="hub-card-desc">
-								O Centro de Inovação Verde Bruno Covas - Hub Green Sampa apoia startups de economia verde e é aberto para o público com unidades do TEIA e Sampa Cast.
-							</p>
-							<a href="#hub-green-sampa" class="btn btn-primary btn-sm">Saiba mais</a>
-						</article>
-
-						<!-- HUB Sampa Games -->
-						<article class="hub-white-card">
-							<div class="hub-card-logo">
-								<?php echo ade_sampa_get_logo( 'hub-sampagames' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</div>
-							<p class="hub-card-desc">
-								Fortalecerá o setor de games por meio da escola de programação (GameDev) e design de jogos (Game Design), além de eventos como Game Jams e competições de e-sports.
-							</p>
-							<a href="#hub-sampa-games" class="btn btn-primary btn-sm">Saiba mais</a>
-						</article>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- =====================================================================
-	     4. PANORAMIC SÃO PAULO SKYLINE DIVIDER BANNER
-	     ===================================================================== -->
-	<div class="skyline-banner" style="background-image: url('<?php echo esc_url( $img_uri . 'banner-skyline.jpg' ); ?>');" role="img" aria-label="Vista panorâmica da cidade de São Paulo">
-		<div class="skyline-overlay"></div>
-	</div>
-
-	<!-- =====================================================================
-	     5. PRODUTOS FINANCEIROS & NOSSOS PARCEIROS
-	     ===================================================================== -->
-	<section class="section-produtos-financeiros" id="produtos-financeiros">
-		<div class="container">
-			<header class="section-header text-center">
-				<h2 class="section-title">Produtos financeiros</h2>
-				<p class="section-subtitle">
-					Oportunidades de crédito, produtos e serviços financeiros, de acordo com as<br>
-					necessidades de cada negócio
-				</p>
-			</header>
-
-			<div class="produtos-grid">
-				<!-- Left Column: CRED SAMPA -->
-				<div class="produtos-col-left">
-					<div class="credsampa-logo-wrap">
-						<?php echo ade_sampa_get_logo( 'credsampa' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</div>
-					<p class="credsampa-desc">
-						Os melhores produtos e serviços financeiros para cada negócio. O CRED SAMPA auxilia na solicitação de crédito com linhas mais baratas, máquinas de cartão com desconto e outras soluções financeiras.
-					</p>
-				</div>
-
-				<!-- Center Column: Vertical Image -->
-				<div class="produtos-col-center">
-					<img src="<?php echo esc_url( $img_uri . 'produtos-financeiros.jpg' ); ?>" alt="Análise financeira para negócios" class="produtos-center-img" />
-				</div>
-
-				<!-- Right Column: Parcerias & Academia de Finanças -->
-				<div class="produtos-col-right">
-					<div class="fin-feature-card fin-card-blue">
-						<h3 class="fin-card-title">PARCERIAS</h3>
-						<p class="fin-card-text">
-							Acesso a soluções financeiras por meio de parcerias estratégicas e condições especiais para quem busca fortalecer seu negócio.
-						</p>
-					</div>
-
-					<div class="fin-feature-card fin-card-cyan">
-						<h3 class="fin-card-title">ACADEMIA DE FINANÇAS</h3>
-						<p class="fin-card-text">
-							Consultorias individuais com profissionais CFP® sobre planejamento financeiro, controle de custos, impostos e estratégias de crescimento para negócios.
-						</p>
-					</div>
-				</div>
+			<div class="oportunidades-header">
+				<h2 class="section-title"><?php esc_html_e( 'Destaques e oportunidades', 'tema-ade-sampa' ); ?></h2>
+				<hr class="section-divider-line">
 			</div>
 
-			<!-- Nossos Parceiros Dark Blue Banner -->
-			<div class="parceiros-banner">
-				<h3 class="parceiros-title">Nossos parceiros</h3>
-				<div class="parceiros-logos-row">
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-bb.png' ); ?>" alt="Banco do Brasil" class="partner-logo-img" />
-					<span class="partner-text-logo partner-caixa" aria-label="CAIXA">CAIXA</span>
-					<span class="partner-text-logo partner-bancodopovo" aria-label="Banco do Povo"><small>BANCO DO</small><strong>POVO</strong></span>
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-sicredi.png' ); ?>" alt="Sicredi" class="partner-logo-img" />
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-febraban.png' ); ?>" alt="Meu Bolso em Dia - Febraban Educação" class="partner-logo-img partner-logo-tall" />
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-ton.png' ); ?>" alt="Parceiro Ton" class="partner-logo-img" />
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-estimulo.png' ); ?>" alt="Estímulo" class="partner-logo-img partner-logo-tall" />
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-justa.png' ); ?>" alt="Justa" class="partner-logo-img" />
-					<img src="<?php echo esc_url( $img_uri . 'parceiro-planejar.png' ); ?>" alt="Planejar" class="partner-logo-img" />
-				</div>
-			</div>
-		</div>
-	</section>
+			<div class="carousel-wrapper">
+				<button type="button" class="carousel-nav-btn carousel-nav-prev" id="oportunidades-prev" aria-label="<?php esc_attr_e( 'Oportunidade anterior', 'tema-ade-sampa' ); ?>">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M15 18L9 12L15 6"/>
+					</svg>
+				</button>
 
-	<!-- =====================================================================
-	     6. SISTEMA DE GESTÃO PARA O SEU NEGÓCIO
-	     ===================================================================== -->
-	<section class="section-sistema-gestao" id="sistema-gestao">
-		<div class="container">
-			<header class="section-header text-center">
-				<h2 class="section-title">Sistema de gestão para o seu negócio</h2>
-			</header>
-
-			<div class="gestao-showcase">
-				<div class="gestao-photo-wrap">
-					<img src="<?php echo esc_url( $img_uri . 'erp-gestao.jpg' ); ?>" alt="Empreendedores utilizando o Gestão Sampa ERP gratuito" class="gestao-photo" />
-					<span class="erp-gratuito-badge">ERP gratuito</span>
-				</div>
-
-				<div class="gestao-glass-card">
-					<div class="gestao-logo-wrap">
-						<?php echo ade_sampa_get_logo( 'gestaosampa' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</div>
-					<p class="gestao-card-desc">
-						Gerenciamento completo do negócio em uma única plataforma, com relatórios em tempo real e informações sincronizadas e automatizadas.
-					</p>
-				</div>
-			</div>
-
-			<div class="text-center gestao-cta-wrap">
-				<a href="#cadastro" class="btn btn-primary btn-lg">Cadastre-se</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- =====================================================================
-	     7. CAPACITAÇÕES
-	     ===================================================================== -->
-	<section class="section-capacitacoes" id="capacitacoes">
-		<div class="container">
-			<header class="section-header text-center">
-				<h2 class="section-title">Capacitações</h2>
-				<p class="section-subtitle">
-					Cursos, mentorias e oficinas que ajudam micro e pequenos empreendedores a<br>
-					desenvolver habilidades em gestão, marketing e estratégias de negócio
-				</p>
-			</header>
-
-			<div class="capacitacoes-grid">
-				<!-- Card 1: Fábrica de Negócios -->
-				<article class="capacitacao-card">
-					<div class="capacitacao-logo">
-						<?php echo ade_sampa_get_logo( 'fabrica-negocios' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</div>
-					<p class="capacitacao-desc">
-						Curso que ensina a criar e gerir negócios, voltado para quem já empreende ou quer começar.
-					</p>
-				</article>
-
-				<!-- Card 2: ADE SAMPA Ensina -->
-				<article class="capacitacao-card">
-					<div class="capacitacao-logo">
-						<?php echo ade_sampa_get_logo( 'ade-ensina' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</div>
-					<p class="capacitacao-desc">
-						Plataforma com cursos gratuitos de qualificação profissional, gestão e empreendedorismo.
-					</p>
-				</article>
-			</div>
-
-			<div class="text-center capacitacoes-cta-wrap">
-				<a href="#cadastro" class="btn btn-primary btn-lg">Cadastre-se</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- =====================================================================
-	     8. EDITAIS
-	     ===================================================================== -->
-	<section class="section-editais" id="editais">
-		<div class="container">
-			<header class="section-header text-center">
-				<h2 class="section-title">Editais</h2>
-				<p class="section-subtitle editais-subtitle">
-					Voltadas para negócios, especialmente geridos por jovens das periferias, com aporte financeiro,<br>
-					oficinas de capacitação, mentorias, assessorias, ampliação das redes de contato e possibilidade<br>
-					de participação em eventos nacionais e internacionais.
-				</p>
-			</header>
-
-			<!-- Category Filter Pills -->
-			<div class="editais-filters" role="tablist" aria-label="Filtrar editais por categoria">
-				<?php
-				$categories = array( 'GERAL', 'TECNOLOGIA', 'GAMES', 'AUDIOVISUAL', 'ECONOMIA VERDE', 'RURAL', 'TÊXTIL', 'HACKATONS' );
-				foreach ( $categories as $index => $cat ) :
-					?>
-					<button
-						type="button"
-						class="edital-filter-pill <?php echo 0 === $index ? 'active' : ''; ?>"
-						data-filter="<?php echo esc_attr( $cat ); ?>"
-						role="tab"
-						aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>">
-						<?php echo esc_html( $cat ); ?>
-					</button>
-				<?php endforeach; ?>
-			</div>
-
-			<!-- Carousel Track -->
-			<div class="editais-carousel-viewport">
-				<div class="editais-carousel-track" id="editais-track">
-					<?php foreach ( $editais_data as $idx => $edital ) : ?>
-						<article
-							class="edital-card"
-							data-category="<?php echo esc_attr( $edital['category'] ); ?>"
-							data-index="<?php echo esc_attr( $idx + 1 ); ?>">
-							<div class="edital-card-top">
-								<div class="edital-card-logo">
-									<?php echo ade_sampa_get_logo( $edital['logo'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								</div>
-								<div class="edital-card-thumb">
-									<img src="<?php echo esc_url( $edital['image'] ); ?>" alt="<?php echo esc_attr( $edital['title'] ); ?>" />
+				<div class="oportunidades-carousel-viewport">
+					<div class="oportunidades-track" id="oportunidades-track">
+						<!-- Card 1: Vai Tec -->
+						<article class="oportunidade-card">
+							<div class="oportunidade-card-inner">
+								<span class="pill-badge pill-badge-cyan"><?php esc_html_e( 'SAMPA TECH', 'tema-ade-sampa' ); ?></span>
+								<h3 class="oportunidade-title"><?php esc_html_e( 'Edital aberto: Aceleração Vai Tec', 'tema-ade-sampa' ); ?></h3>
+								<p class="oportunidade-desc">
+									<?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus.', 'tema-ade-sampa' ); ?>
+								</p>
+								<div class="oportunidade-btn-wrap">
+									<a href="#vai-tec" class="btn btn-primary btn-block"><?php esc_html_e( 'Acessar página do curso', 'tema-ade-sampa' ); ?></a>
 								</div>
 							</div>
-							<div class="edital-card-body">
-								<p class="edital-card-desc"><?php echo esc_html( $edital['desc'] ); ?></p>
-								<a href="<?php echo esc_url( $edital['url'] ); ?>" class="btn btn-cyan btn-sm">Saiba mais</a>
+						</article>
+
+						<!-- Card 2: Game Dev (Em destaque) -->
+						<article class="oportunidade-card destaque-ativo">
+							<div class="oportunidade-card-inner">
+								<span class="pill-badge pill-badge-purple"><?php esc_html_e( 'SAMPA GAMES', 'tema-ade-sampa' ); ?></span>
+								<h3 class="oportunidade-title"><?php esc_html_e( 'Curso de Game Dev: Vagas para turma de Abril', 'tema-ade-sampa' ); ?></h3>
+								<p class="oportunidade-desc">
+									<?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus.', 'tema-ade-sampa' ); ?>
+								</p>
+								<div class="oportunidade-btn-wrap">
+									<a href="#game-dev" class="btn btn-primary btn-block"><?php esc_html_e( 'Acessar página do curso', 'tema-ade-sampa' ); ?></a>
+								</div>
 							</div>
 						</article>
-					<?php endforeach; ?>
+
+						<!-- Card 3: Gestão de Negócios -->
+						<article class="oportunidade-card">
+							<div class="oportunidade-card-inner">
+								<span class="pill-badge pill-badge-blue-soft"><?php esc_html_e( 'SAMPA EMPREENDE', 'tema-ade-sampa' ); ?></span>
+								<h3 class="oportunidade-title"><?php esc_html_e( 'Curso Gestão de Negócios: Inscrições abertas', 'tema-ade-sampa' ); ?></h3>
+								<p class="oportunidade-desc">
+									<?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus.', 'tema-ade-sampa' ); ?>
+								</p>
+								<div class="oportunidade-btn-wrap">
+									<a href="#gestao-negocios" class="btn btn-primary btn-block"><?php esc_html_e( 'Acessar página do curso', 'tema-ade-sampa' ); ?></a>
+								</div>
+							</div>
+						</article>
+					</div>
 				</div>
+
+				<button type="button" class="carousel-nav-btn carousel-nav-next" id="oportunidades-next" aria-label="<?php esc_attr_e( 'Próxima oportunidade', 'tema-ade-sampa' ); ?>">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M9 18L15 12L9 6"/>
+					</svg>
+				</button>
 			</div>
 
-			<!-- Carousel Controls & Counter (1 --- 12) -->
-			<div class="editais-controls">
-				<div class="editais-arrows">
-					<button type="button" class="carousel-arrow" id="edital-prev" aria-label="Edital anterior">
-						<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M8.5 1.5L2 8L8.5 14.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-					<button type="button" class="carousel-arrow" id="edital-next" aria-label="Próximo edital">
-						<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M1.5 1.5L8 8L1.5 14.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
+			<!-- Indicadores de paginação -->
+			<div class="carousel-dots" id="oportunidades-dots" role="tablist" aria-label="Indicadores do carrossel">
+				<button type="button" class="dot active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+				<button type="button" class="dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+				<button type="button" class="dot" role="tab" aria-selected="false" aria-label="Slide 3"></button>
+			</div>
+		</div>
+	</section>
+
+	<!-- =====================================================================
+	     4. NOSSO IMPACTO EM NÚMEROS (DARK NAVY SECTION)
+	     ===================================================================== -->
+	<section class="section-impacto" id="impacto">
+		<div class="container">
+			<div class="impacto-header">
+				<span class="pill-badge pill-badge-dark"><?php esc_html_e( 'INDICADORES DE DESENVOLVIMENTO', 'tema-ade-sampa' ); ?></span>
+				<h2 class="section-title text-white"><?php esc_html_e( 'Nosso impacto em números', 'tema-ade-sampa' ); ?></h2>
+				<p class="section-subtitle text-muted-blue">
+					<?php esc_html_e( 'Resultados consolidados de apoio ao empreendedorismo, inovação periférica e descentralização econômica na cidade.', 'tema-ade-sampa' ); ?>
+				</p>
+				<hr class="impacto-divider">
+			</div>
+
+			<div class="impacto-cards-grid">
+				<!-- Stat 1 -->
+				<div class="impacto-card">
+					<div class="impacto-stat-number"><?php esc_html_e( '11 anos', 'tema-ade-sampa' ); ?></div>
+					<p class="impacto-stat-label"><?php esc_html_e( 'Fomentando o desenvolvimento de São Paulo', 'tema-ade-sampa' ); ?></p>
 				</div>
-				<div class="editais-counter" aria-live="polite">
-					<span id="edital-current-num">1</span>
-					<span class="counter-line"></span>
-					<span id="edital-total-num"><?php echo count( $editais_data ); ?></span>
+
+				<!-- Stat 2 (Highlight) -->
+				<div class="impacto-card card-destaque">
+					<div class="impacto-stat-number"><?php esc_html_e( '+180.000', 'tema-ade-sampa' ); ?></div>
+					<p class="impacto-stat-label"><?php esc_html_e( 'Empreendedores e cidadãos atendidos', 'tema-ade-sampa' ); ?></p>
+				</div>
+
+				<!-- Stat 3 -->
+				<div class="impacto-card">
+					<div class="impacto-stat-number"><?php esc_html_e( '+20', 'tema-ade-sampa' ); ?></div>
+					<p class="impacto-stat-label"><?php esc_html_e( 'Coworkings públicos em operação', 'tema-ade-sampa' ); ?></p>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<!-- =====================================================================
-	     9. PRE-FOOTER CTA BANNER
+	     5. TEIA: COWORKINGS PÚBLICOS E GRATUITOS
 	     ===================================================================== -->
-	<section class="section-prefooter-cta" id="cadastro">
-		<div class="container text-center">
-			<h2 class="prefooter-cta-title">
-				Conheça todos os serviços da ADE SAMPA<br>
-				e participe dos nossos programas!
-			</h2>
-			<a href="#cadastro-form" class="btn btn-primary btn-lg">Cadastre-se</a>
+	<section class="section-teia" id="teia">
+		<div class="container">
+			<div class="teia-split-grid">
+				<!-- Left Column: Informações -->
+				<div class="teia-info-col">
+					<span class="pill-badge pill-badge-blue"><?php esc_html_e( 'EQUIPAMENTO PÚBLICO', 'tema-ade-sampa' ); ?></span>
+					<h2 class="section-title teia-title">
+						<?php esc_html_e( 'Teia: Coworkings Públicos e gratuitos por toda a cidade', 'tema-ade-sampa' ); ?>
+					</h2>
+					<p class="teia-description">
+						<?php esc_html_e( 'Espaços estruturados com Wi-Fi veloz, computadores, salas de reunião compartilhadas e suporte técnico nas regiões periféricas e centrais de São Paulo.', 'tema-ade-sampa' ); ?>
+					</p>
+
+					<ul class="teia-checklist">
+						<li>
+							<?php echo ade_sampa_get_logo( 'check-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span><?php esc_html_e( 'Acesso gratuito para MEIs, autônomos e coletivos', 'tema-ade-sampa' ); ?></span>
+						</li>
+						<li>
+							<?php echo ade_sampa_get_logo( 'check-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span><?php esc_html_e( 'Oficinas de empreendedorismo semanais', 'tema-ade-sampa' ); ?></span>
+						</li>
+						<li>
+							<?php echo ade_sampa_get_logo( 'check-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span><?php esc_html_e( 'Agendamento de salas de reunião', 'tema-ade-sampa' ); ?></span>
+						</li>
+					</ul>
+
+					<div class="teia-buttons-wrap">
+						<a href="#conhecer-teia" class="btn btn-outline-primary"><?php esc_html_e( 'Saiba mais', 'tema-ade-sampa' ); ?></a>
+						<a href="#agendamentos" class="btn btn-primary"><?php esc_html_e( 'Agende um horário', 'tema-ade-sampa' ); ?></a>
+					</div>
+				</div>
+
+				<!-- Right Column: Visual Unit & Map Card -->
+				<div class="teia-map-col">
+					<div class="teia-interactive-card">
+						<div class="teia-card-topbar">
+							<span class="teia-card-topbar-title">← TEIA Parque Novo Mundo</span>
+							<span class="teia-card-topbar-icon" aria-hidden="true">↗</span>
+						</div>
+						<div class="teia-card-body">
+							<div class="teia-card-meta">
+								<div class="meta-item">
+									<label><?php esc_html_e( 'Unidade', 'tema-ade-sampa' ); ?></label>
+									<strong><?php esc_html_e( 'TEIA Parque Novo Mundo', 'tema-ade-sampa' ); ?></strong>
+								</div>
+								<div class="meta-item">
+									<label><?php esc_html_e( 'ZONA', 'tema-ade-sampa' ); ?></label>
+									<span><?php esc_html_e( 'Norte I', 'tema-ade-sampa' ); ?></span>
+								</div>
+								<div class="meta-item">
+									<label><?php esc_html_e( 'Classificação', 'tema-ade-sampa' ); ?></label>
+									<span><?php esc_html_e( 'TEIA - Espaço de Trabalho', 'tema-ade-sampa' ); ?></span>
+								</div>
+								<div class="meta-item">
+									<label><?php esc_html_e( 'Atendimento Funcionando?', 'tema-ade-sampa' ); ?></label>
+									<span class="status-badge-active"><?php esc_html_e( 'Atendimento funcionando', 'tema-ade-sampa' ); ?></span>
+								</div>
+								<div class="meta-item">
+									<label><?php esc_html_e( 'Endereço', 'tema-ade-sampa' ); ?></label>
+									<address><?php esc_html_e( 'Av. Ernesto Augusto Lopes, 100 - Parque Vila Maria, São Paulo - SP, 02169-030', 'tema-ade-sampa' ); ?></address>
+								</div>
+							</div>
+							<div class="teia-card-map-img">
+								<img src="<?php echo esc_url( $img_uri . 'teia-map-sp.png' ); ?>" alt="Mapa de localização TEIA São Paulo" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =====================================================================
+	     6. NOSSOS PRODUTOS DIGITAIS
+	     ===================================================================== -->
+	<section class="section-produtos" id="produtos-digitais">
+		<div class="container">
+			<header class="section-header text-center">
+				<h2 class="section-title"><?php esc_html_e( 'Nossos produtos digitais', 'tema-ade-sampa' ); ?></h2>
+				<p class="section-subtitle">
+					<?php esc_html_e( 'Soluções tecnológicas desenvolvidas para impulsionar a capacitação, a gestão e a inteligência empreendedora na cidade.', 'tema-ade-sampa' ); ?>
+				</p>
+			</header>
+
+			<div class="produtos-digital-grid">
+				<!-- 1. Sampa Ensina -->
+				<article class="produto-digital-card">
+					<div class="produto-icon-wrap">
+						<?php echo ade_sampa_get_logo( 'product-ensina' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+					<h3 class="produto-card-title"><?php esc_html_e( 'Sampa Ensina', 'tema-ade-sampa' ); ?></h3>
+					<p class="produto-card-desc">
+						<?php esc_html_e( 'Plataforma aberta de capacitação online, trilhas de aprendizagem e cursos gratuitos para empreendedores e futuros negócios.', 'tema-ade-sampa' ); ?>
+					</p>
+					<a href="#sampa-ensina" class="produto-link">
+						<span><?php esc_html_e( 'Acessar plataforma', 'tema-ade-sampa' ); ?></span>
+						<span class="arrow-symbol">→</span>
+					</a>
+				</article>
+
+				<!-- 2. Data Sampa -->
+				<article class="produto-digital-card">
+					<div class="produto-icon-wrap">
+						<?php echo ade_sampa_get_logo( 'product-data' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+					<h3 class="produto-card-title"><?php esc_html_e( 'Data Sampa', 'tema-ade-sampa' ); ?></h3>
+					<p class="produto-card-desc">
+						<?php esc_html_e( 'Portal de inteligência de dados, observatório econômico territorial e indicadores abertos sobre o ecossistema empreendedor paulistano.', 'tema-ade-sampa' ); ?>
+					</p>
+					<a href="#data-sampa" class="produto-link">
+						<span><?php esc_html_e( 'Explorar indicadores', 'tema-ade-sampa' ); ?></span>
+						<span class="arrow-symbol">→</span>
+					</a>
+				</article>
+
+				<!-- 3. Gestão Sampa -->
+				<article class="produto-digital-card">
+					<div class="produto-icon-wrap">
+						<?php echo ade_sampa_get_logo( 'product-gestao' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+					<h3 class="produto-card-title"><?php esc_html_e( 'Gestão Sampa', 'tema-ade-sampa' ); ?></h3>
+					<p class="produto-card-desc">
+						<?php esc_html_e( 'Solução digital integrada para gestão empresarial, fluxo de caixa, precificação, controle fiscal e apoio na formalização de MEIs.', 'tema-ade-sampa' ); ?>
+					</p>
+					<a href="#gestao-sampa" class="produto-link">
+						<span><?php esc_html_e( 'Conhecer ferramenta', 'tema-ade-sampa' ); ?></span>
+						<span class="arrow-symbol">→</span>
+					</a>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- =====================================================================
+	     7. PRAÇA VICTOR CIVITA (FOREST GREEN SECTION)
+	     ===================================================================== -->
+	<section class="section-civita" id="victor-civita">
+		<div class="container">
+			<div class="civita-split-grid">
+				<!-- Left Column: Informações -->
+				<div class="civita-info-col">
+					<span class="pill-badge pill-badge-green"><?php esc_html_e( 'SUSTENTABILIDADE', 'tema-ade-sampa' ); ?></span>
+					<h2 class="section-title text-white"><?php esc_html_e( 'Praça Victor Civita', 'tema-ade-sampa' ); ?></h2>
+					<p class="civita-description">
+						<?php esc_html_e( 'Um espaço dedicado à sustentabilidade, educação ambiental e cultura na zona oeste da cidade. Gerido para fomentar economia verde e integração comunitária.', 'tema-ade-sampa' ); ?>
+					</p>
+
+					<hr class="civita-divider">
+
+					<div class="civita-meta-grid">
+						<div class="civita-meta-item">
+							<span class="civita-meta-label"><?php esc_html_e( 'Funcionamento', 'tema-ade-sampa' ); ?></span>
+							<strong class="civita-meta-val"><?php esc_html_e( 'Segunda a Domingo, 06h às 18h', 'tema-ade-sampa' ); ?></strong>
+						</div>
+						<div class="civita-meta-item">
+							<span class="civita-meta-label"><?php esc_html_e( 'Localização', 'tema-ade-sampa' ); ?></span>
+							<strong class="civita-meta-val"><?php esc_html_e( 'R. Sumidouro, 580 - Pinheiros, São Paulo', 'tema-ade-sampa' ); ?></strong>
+						</div>
+					</div>
+
+					<div class="civita-btn-wrap">
+						<a href="#programacao-civita" class="btn btn-civita-white"><?php esc_html_e( 'Ver programação completa', 'tema-ade-sampa' ); ?></a>
+					</div>
+				</div>
+
+				<!-- Right Column: Galeria de Fotos Verticais -->
+				<div class="civita-photos-col">
+					<div class="civita-photo-card">
+						<img src="<?php echo esc_url( $img_uri . 'victor-civita-1.png' ); ?>" alt="Praça Victor Civita Edifício Histórico" />
+					</div>
+					<div class="civita-photo-card">
+						<img src="<?php echo esc_url( $img_uri . 'victor-civita-2.png' ); ?>" alt="Praça Victor Civita Decks e Jardins" />
+					</div>
+					<div class="civita-photo-card">
+						<img src="<?php echo esc_url( $img_uri . 'victor-civita-3.png' ); ?>" alt="Praça Victor Civita Espaço Comunitário" />
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 
