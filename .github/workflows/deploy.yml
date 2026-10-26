@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -13,32 +14,35 @@ jobs:
       - name: 🚚 Baixar código do repositório
         uses: actions/checkout@v4
 
-      - name: 🚀 Sincronizar arquivos (Cria pastas automaticamente)
+      - name: 🚀 Sincronizar arquivos com a KingHost
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -c "
-            set ftp:ssl-allow no
-            set net:timeout 20
-            set net:max-retries 3
-            open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' '${{ secrets.FTP_SERVER }}'
-            
-            # Testa se a raiz usa 'www' ou vai direto para 'wp-content'
-            mkdir -p www/wp-content/themes/tema-ade-sampa 2>/dev/null || true
-            mkdir -p wp-content/themes/tema-ade-sampa 2>/dev/null || true
-            
-            # Envia os arquivos criando todas as pastas e subpastas
-            mirror -R --verbose \
-              --exclude-glob .git* \
-              --exclude-glob .github* \
-              --exclude-glob tema-ade-sampa.zip \
-              --exclude-glob README.md \
-              ./ www/wp-content/themes/tema-ade-sampa/ || \
-            mirror -R --verbose \
-              --exclude-glob .git* \
-              --exclude-glob .github* \
-              --exclude-glob tema-ade-sampa.zip \
-              --exclude-glob README.md \
-              ./ wp-content/themes/tema-ade-sampa/
-              
-            quit
-          "
+
+          # 1. Detecta se a raiz do FTP contém a pasta 'www'
+          HAS_WWW=$(lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "set ftp:ssl-allow no; cls -d www; quit" 2>/dev/null || true)
+
+          if [ -n "$HAS_WWW" ]; then
+            TARGET_DIR="www/wp-content/themes/tema-ade-sampa"
+          else
+            TARGET_DIR="wp-content/themes/tema-ade-sampa"
+          fi
+
+          echo ">> Diretório de destino identificado: $TARGET_DIR"
+
+          # 2. Executa a sincronização criando pastas automaticamente
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << EOF
+          set ftp:ssl-allow no
+          set net:timeout 30
+          set net:max-retries 3
+
+          mkdir -p $TARGET_DIR
+
+          mirror -R --verbose \
+            --exclude-glob .git* \
+            --exclude-glob .github* \
+            --exclude-glob tema-ade-sampa.zip \
+            --exclude-glob README.md \
+            ./ $TARGET_DIR/
+
+          quit
+          EOF
