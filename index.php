@@ -71,7 +71,7 @@ get_header();
 				</div>
 			<?php else : ?>
 				<div class="empty-state-box text-center">
-					<h2><?php esc_html_e( 'Nenhuma publicação encontrada no momento.', 'tema-ade-sampa' ); ?></h2>
+					<h2><?php esc_html_e( 'Não há notícias', 'tema-ade-sampa' ); ?></h2>
 					<p><?php esc_html_e( 'Confira nossos programas e editais abertos na página inicial.', 'tema-ade-sampa' ); ?></p>
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn btn-primary">Voltar ao Início</a>
 				</div>
