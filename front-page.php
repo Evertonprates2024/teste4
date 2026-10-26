@@ -49,7 +49,7 @@ $editais_data = ade_sampa_get_editais_data();
 	<section class="section-atendimento" id="atendimento">
 		<div class="container">
 			<header class="section-header text-center">
-				<h2 class="section-title">Atendimento ao empreendedor</h2>
+				<h2 class="section-title">ATENDIMENTO AO EMPREENDEDOR</h2>
 				<p class="section-subtitle">
 					Orientação sobre formalização, regularização e desenvolvimento de negócios
 				</p>
