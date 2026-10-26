@@ -14,35 +14,31 @@ jobs:
       - name: 🚚 Baixar código do repositório
         uses: actions/checkout@v4
 
-      - name: 🚀 Sincronizar arquivos com a KingHost
+      - name: 🚀 Sincronizar tema no WordPress
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
-          # 1. Detecta se a raiz do FTP contém a pasta 'www'
-          HAS_WWW=$(lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "set ftp:ssl-allow no; cls -d www; quit" 2>/dev/null || true)
-
-          if [ -n "$HAS_WWW" ]; then
-            TARGET_DIR="www/wp-content/themes/tema-ade-sampa"
-          else
-            TARGET_DIR="wp-content/themes/tema-ade-sampa"
-          fi
-
-          echo ">> Diretório de destino identificado: $TARGET_DIR"
-
-          # 2. Executa a sincronização criando pastas automaticamente
-          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << EOF
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
           set ftp:ssl-allow no
           set net:timeout 30
           set net:max-retries 3
 
-          mkdir -p $TARGET_DIR
+          # 1. Navega até a pasta de temas existente do WordPress
+          cd www/wp-content/themes || cd wp-content/themes
 
+          # 2. Cria a pasta do tema (com permissão total concedida)
+          mkdir -p tema-ade-sampa
+
+          # 3. Entra na pasta do tema
+          cd tema-ade-sampa
+
+          # 4. Sincroniza todos os arquivos
           mirror -R --verbose \
             --exclude-glob .git* \
             --exclude-glob .github* \
             --exclude-glob tema-ade-sampa.zip \
             --exclude-glob README.md \
-            ./ $TARGET_DIR/
+            ./ ./
 
           quit
           EOF
