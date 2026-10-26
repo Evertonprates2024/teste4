@@ -369,3 +369,39 @@ function ade_sampa_get_editais_data() {
 		),
 	);
 }
+
+/**
+ * Customize browser tab title: ADE SAMPA
+ */
+function ade_sampa_custom_document_title( $title ) {
+	if ( is_front_page() || is_home() ) {
+		return 'ADE SAMPA - Agência São Paulo de Desenvolvimento';
+	}
+	return $title . ' - ADE SAMPA';
+}
+add_filter( 'pre_get_document_title', 'ade_sampa_custom_document_title', 50 );
+
+function ade_sampa_custom_title_parts( $title_parts ) {
+	if ( empty( $title_parts['site'] ) || 'WordPress' === $title_parts['site'] || 'Wordpress' === $title_parts['site'] ) {
+		$title_parts['site'] = 'ADE SAMPA';
+	}
+	if ( is_front_page() || is_home() ) {
+		$title_parts['title']   = 'ADE SAMPA';
+		$title_parts['tagline'] = 'Agência São Paulo de Desenvolvimento';
+	}
+	return $title_parts;
+}
+add_filter( 'document_title_parts', 'ade_sampa_custom_title_parts', 50 );
+
+/**
+ * Automatically update WordPress site name to ADE SAMPA if default
+ */
+function ade_sampa_update_default_site_title() {
+	$current_name = get_option( 'blogname' );
+	if ( 'WordPress' === $current_name || 'Wordpress' === $current_name || empty( $current_name ) ) {
+		update_option( 'blogname', 'ADE SAMPA' );
+		update_option( 'blogdescription', 'Agência São Paulo de Desenvolvimento' );
+	}
+}
+add_action( 'init', 'ade_sampa_update_default_site_title', 5 );
+
