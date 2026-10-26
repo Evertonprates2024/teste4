@@ -20,10 +20,10 @@ function ade_sampa_get_logo( $name ) {
 
 	switch ( $name ) {
 		case 'ade-header':
-			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa.png' ) . '" alt="ADE SAMPA" class="ade-header-logo-img" />';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa.png' ) . '" alt="ADE SAMPA" class="ade-header-logo-img" height="36" style="height: 36px; width: auto; max-height: 38px; max-width: 175px; object-fit: contain; display: block; margin: 0 auto;" />';
 
 		case 'ade-footer':
-			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa-footer.png' ) . '" alt="ADE SAMPA" class="ade-footer-logo-img" />';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa-footer.png' ) . '" alt="ADE SAMPA" class="ade-footer-logo-img" height="42" style="height: 42px; width: auto; max-height: 44px; max-width: 200px; object-fit: contain; display: block; margin-bottom: 18px;" />';
 
 		case 'contrata-sp':
 			return '

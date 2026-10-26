@@ -198,18 +198,24 @@ ul {
 /* ==========================================================================
    3. BRAND & PROGRAM LOGOS (SVG + BADGES)
    ========================================================================== */
-.ade-header-logo-img {
-	height: 38px;
-	width: auto;
-	max-width: 190px;
+.ade-header-logo-img,
+.site-branding img,
+.custom-logo-link img {
+	height: 36px !important;
+	max-height: 38px !important;
+	width: auto !important;
+	max-width: 175px !important;
 	object-fit: contain;
 	display: block;
+	margin: 0 auto;
 }
 
-.ade-footer-logo-img {
-	height: 44px;
-	width: auto;
-	max-width: 220px;
+.ade-footer-logo-img,
+.footer-col-brand img {
+	height: 42px !important;
+	max-height: 44px !important;
+	width: auto !important;
+	max-width: 200px !important;
 	object-fit: contain;
 	display: block;
 	margin-bottom: 18px;
