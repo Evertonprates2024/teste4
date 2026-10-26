@@ -7,20 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  identificar:
-    name: Identificar caminho do tema
+  deploy:
+    name: Sincronizar com KingHost via FTP
     runs-on: ubuntu-latest
     steps:
-      - name: 🔍 Listar pastas da raiz
-        run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
-          set ftp:ssl-allow no
-          set net:timeout 15
-          set net:max-retries 1
+      - name: 🚚 Baixar código do repositório
+        uses: actions/checkout@v4
 
-          echo "=== PASTAS NA SUA RAIZ FTP ==="
-          ls -F
-
-          quit
-          EOF
+      - name: 🚀 Sincronizar tema no WordPress
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./wp-content/themes/tema-ade-sampa/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/tema-ade-sampa.zip
+            README.md
