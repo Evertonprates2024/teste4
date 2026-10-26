@@ -7,24 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  descobrir-pastas:
-    name: Identificar estrutura de pastas na KingHost
+  identificar:
+    name: Identificar caminho do tema
     runs-on: ubuntu-latest
     steps:
-      - name: 🔍 Listar diretórios do FTP
+      - name: 🔍 Listar pastas da raiz
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-
           lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
           set ftp:ssl-allow no
-          set net:timeout 20
+          set net:timeout 15
+          set net:max-retries 1
 
-          echo "=== 1. PASTA RAIZ DO SEU FTP ==="
-          pwd
-          ls -la
-
-          echo "=== 2. LOCALIZANDO O WORDPRESS ==="
-          find -d 3 .
+          echo "=== PASTAS NA SUA RAIZ FTP ==="
+          ls -F
 
           quit
           EOF
