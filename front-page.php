@@ -81,48 +81,28 @@ $img_uri = get_template_directory_uri() . '/assets/images/';
 
 			<div class="verticais-grid">
 				<!-- 1. Sampa Empreende -->
-				<a href="#sampa-empreende" class="vertical-card card-empreende" aria-label="Sampa Empreende">
-					<div class="vertical-card-bg-shape"></div>
-					<div class="vertical-card-content">
-						<span class="vertical-brand-small">sampa</span>
-						<span class="vertical-brand-large">EMPREENDE</span>
-					</div>
+				<a href="#sampa-empreende" class="vertical-card" aria-label="<?php esc_attr_e( 'Sampa Empreende', 'tema-ade-sampa' ); ?>">
+					<img src="<?php echo esc_url( $img_uri . 'card-sampa-empreende.png' ); ?>" alt="<?php esc_attr_e( 'Sampa Empreende', 'tema-ade-sampa' ); ?>" width="309" height="347" loading="lazy">
 				</a>
 
 				<!-- 2. Sampa Tech -->
-				<a href="#sampa-tech" class="vertical-card card-tech" aria-label="Sampa Tech">
-					<div class="vertical-card-bg-shape"></div>
-					<div class="vertical-card-content">
-						<span class="vertical-brand-small">sampa</span>
-						<span class="vertical-brand-large">TECH</span>
-					</div>
+				<a href="#sampa-tech" class="vertical-card" aria-label="<?php esc_attr_e( 'Sampa Tech', 'tema-ade-sampa' ); ?>">
+					<img src="<?php echo esc_url( $img_uri . 'card-sampa-tech.png' ); ?>" alt="<?php esc_attr_e( 'Sampa Tech', 'tema-ade-sampa' ); ?>" width="309" height="347" loading="lazy">
 				</a>
 
 				<!-- 3. Sampa Games -->
-				<a href="#sampa-games" class="vertical-card card-games" aria-label="Sampa Games">
-					<div class="vertical-card-bg-shape"></div>
-					<div class="vertical-card-content">
-						<span class="vertical-brand-small">sampa</span>
-						<span class="vertical-brand-large">GAMES</span>
-					</div>
+				<a href="#sampa-games" class="vertical-card" aria-label="<?php esc_attr_e( 'Sampa Games', 'tema-ade-sampa' ); ?>">
+					<img src="<?php echo esc_url( $img_uri . 'card-sampa-games.png' ); ?>" alt="<?php esc_attr_e( 'Sampa Games', 'tema-ade-sampa' ); ?>" width="309" height="347" loading="lazy">
 				</a>
 
 				<!-- 4. Sampa Verde -->
-				<a href="#sampa-verde" class="vertical-card card-verde" aria-label="Sampa Verde">
-					<div class="vertical-card-bg-shape"></div>
-					<div class="vertical-card-content">
-						<span class="vertical-brand-small">sampa</span>
-						<span class="vertical-brand-large">VERDE</span>
-					</div>
+				<a href="#sampa-verde" class="vertical-card" aria-label="<?php esc_attr_e( 'Sampa Verde', 'tema-ade-sampa' ); ?>">
+					<img src="<?php echo esc_url( $img_uri . 'card-sampa-verde.png' ); ?>" alt="<?php esc_attr_e( 'Sampa Verde', 'tema-ade-sampa' ); ?>" width="309" height="347" loading="lazy">
 				</a>
 
 				<!-- 5. Sampa Criativa -->
-				<a href="#sampa-criativa" class="vertical-card card-criativa" aria-label="Sampa Criativa">
-					<div class="vertical-card-bg-shape"></div>
-					<div class="vertical-card-content">
-						<span class="vertical-brand-small">sampa</span>
-						<span class="vertical-brand-large">CRIATIVA</span>
-					</div>
+				<a href="#sampa-criativa" class="vertical-card" aria-label="<?php esc_attr_e( 'Sampa Criativa', 'tema-ade-sampa' ); ?>">
+					<img src="<?php echo esc_url( $img_uri . 'card-sampa-criativa.png' ); ?>" alt="<?php esc_attr_e( 'Sampa Criativa', 'tema-ade-sampa' ); ?>" width="309" height="347" loading="lazy">
 				</a>
 			</div>
 		</div>

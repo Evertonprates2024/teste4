@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.0.0
+Version: 2.0.1
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -52,9 +52,9 @@ Tags: custom-menu, custom-logo, featured-images, full-width-template, institutio
 	--ade-text-muted: #64748B;
 	--ade-border-light: #E2E8F0;
 
-	/* Tipografia */
-	--ade-font-heading: 'Barlow Condensed', sans-serif;
-	--ade-font-body: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	/* Tipografia (Figma Inter) */
+	--ade-font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--ade-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 	/* Espaçamentos e Raios */
 	--ade-radius-sm: 6px;
@@ -476,7 +476,7 @@ button {
 }
 
 /* ==========================================================================
-   6. NOSSAS VERTICAIS DE ATUAÇÃO
+   6. NOSSAS VERTICAIS DE ATUAÇÃO (CARDS FIGMA PIXEL-PERFECT)
    ========================================================================== */
 .section-verticais {
 	padding-top: 50px;
@@ -494,74 +494,31 @@ button {
 .vertical-card {
 	position: relative;
 	border-radius: var(--ade-radius-lg);
-	padding: 60px 18px 24px;
-	min-height: 230px;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
 	overflow: hidden;
-	color: var(--ade-white);
-	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	display: flex;
+	aspect-ratio: 309 / 347;
+	transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	box-shadow: 0 4px 16px rgba(11, 25, 56, 0.08);
+	background-color: #F8FAFC;
+	text-decoration: none;
 }
 
 .vertical-card:hover {
-	transform: translateY(-6px);
-	box-shadow: 0 12px 30px rgba(11, 25, 56, 0.16);
+	transform: translateY(-8px);
+	box-shadow: 0 16px 36px rgba(11, 25, 56, 0.18);
 }
 
-.card-empreende {
-	background-color: var(--ade-sampa-empreende);
+.vertical-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	border-radius: var(--ade-radius-lg);
+	transition: transform 0.35s ease;
 }
 
-.card-tech {
-	background-color: var(--ade-sampa-tech);
-}
-
-.card-games {
-	background-color: var(--ade-sampa-games);
-}
-
-.card-verde {
-	background-color: var(--ade-sampa-verde);
-}
-
-.card-criativa {
-	background-color: var(--ade-sampa-criativa);
-}
-
-/* Padrão geométrico de canto sutil */
-.vertical-card-bg-shape {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 90px;
-	height: 90px;
-	background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.22), transparent 70%);
-	pointer-events: none;
-}
-
-.vertical-card-content {
-	position: relative;
-	z-index: 2;
-	display: flex;
-	flex-direction: column;
-	line-height: 0.95;
-}
-
-.vertical-brand-small {
-	font-family: var(--ade-font-heading);
-	font-size: 1.7rem;
-	font-weight: 700;
-	letter-spacing: 0.02em;
-	opacity: 0.96;
-}
-
-.vertical-brand-large {
-	font-family: var(--ade-font-heading);
-	font-size: 1.55rem;
-	font-weight: 800;
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
+.vertical-card:hover img {
+	transform: scale(1.02);
 }
 
 /* ==========================================================================
@@ -1373,7 +1330,26 @@ button {
 	}
 
 	.verticais-grid {
-		grid-template-columns: 1fr;
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding-bottom: 12px;
+		-webkit-overflow-scrolling: touch;
+		gap: 14px;
+		margin-left: -24px;
+		margin-right: -24px;
+		padding-left: 24px;
+		padding-right: 24px;
+		scrollbar-width: none;
+	}
+
+	.verticais-grid::-webkit-scrollbar {
+		display: none;
+	}
+
+	.verticais-grid .vertical-card {
+		flex: 0 0 170px;
+		scroll-snap-align: start;
 	}
 
 	.teia-buttons-wrap {
