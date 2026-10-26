@@ -198,6 +198,23 @@ ul {
 /* ==========================================================================
    3. BRAND & PROGRAM LOGOS (SVG + BADGES)
    ========================================================================== */
+.ade-header-logo-img {
+	height: 38px;
+	width: auto;
+	max-width: 190px;
+	object-fit: contain;
+	display: block;
+}
+
+.ade-footer-logo-img {
+	height: 44px;
+	width: auto;
+	max-width: 220px;
+	object-fit: contain;
+	display: block;
+	margin-bottom: 18px;
+}
+
 .ade-brand-logo {
 	display: inline-flex;
 	flex-direction: column;

@@ -20,18 +20,10 @@ function ade_sampa_get_logo( $name ) {
 
 	switch ( $name ) {
 		case 'ade-header':
-			return '
-			<div class="ade-brand-logo ade-brand-header" aria-label="ADE SAMPA - Agência São Paulo de Desenvolvimento">
-				<span class="ade-brand-main">ADE SAMPA</span>
-				<span class="ade-brand-sub">AGÊNCIA SÃO PAULO DE DESENVOLVIMENTO</span>
-			</div>';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa.png' ) . '" alt="ADE SAMPA" class="ade-header-logo-img" />';
 
 		case 'ade-footer':
-			return '
-			<div class="ade-brand-logo ade-brand-footer" aria-label="ADE SAMPA - Agência São Paulo de Desenvolvimento">
-				<span class="ade-brand-main">ADE SAMPA</span>
-				<span class="ade-brand-sub">AGÊNCIA SÃO PAULO DE DESENVOLVIMENTO</span>
-			</div>';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa-footer.png' ) . '" alt="ADE SAMPA" class="ade-footer-logo-img" />';
 
 		case 'contrata-sp':
 			return '
