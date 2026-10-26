@@ -13,15 +13,32 @@ jobs:
       - name: 🚚 Baixar código do repositório
         uses: actions/checkout@v4
 
-      - name: 🚀 Enviar arquivos para a KingHost
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./wp-content/themes/tema-ade-sampa/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/tema-ade-sampa.zip
-            README.md
+      - name: 🚀 Sincronizar arquivos (Cria pastas automaticamente)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -c "
+            set ftp:ssl-allow no
+            set net:timeout 20
+            set net:max-retries 3
+            open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' '${{ secrets.FTP_SERVER }}'
+            
+            # Testa se a raiz usa 'www' ou vai direto para 'wp-content'
+            mkdir -p www/wp-content/themes/tema-ade-sampa 2>/dev/null || true
+            mkdir -p wp-content/themes/tema-ade-sampa 2>/dev/null || true
+            
+            # Envia os arquivos criando todas as pastas e subpastas
+            mirror -R --verbose \
+              --exclude-glob .git* \
+              --exclude-glob .github* \
+              --exclude-glob tema-ade-sampa.zip \
+              --exclude-glob README.md \
+              ./ www/wp-content/themes/tema-ade-sampa/ || \
+            mirror -R --verbose \
+              --exclude-glob .git* \
+              --exclude-glob .github* \
+              --exclude-glob tema-ade-sampa.zip \
+              --exclude-glob README.md \
+              ./ wp-content/themes/tema-ade-sampa/
+              
+            quit
+          "
