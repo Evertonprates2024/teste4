@@ -40,10 +40,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!-- Menu Principal de Navegação -->
 			<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Menu Principal', 'tema-ade-sampa' ); ?>">
 				<ul class="nav-list">
-					<li class="nav-item current-menu-item">
+					<li class="nav-item <?php echo is_front_page() ? 'current-menu-item' : ''; ?>">
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'tema-ade-sampa' ); ?></a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item <?php echo ( is_page( 'sobre' ) || is_page_template( 'page-sobre.php' ) ) ? 'current-menu-item' : ''; ?>">
 						<a href="<?php echo esc_url( home_url( '/sobre/' ) ); ?>"><?php esc_html_e( 'Sobre', 'tema-ade-sampa' ); ?></a>
 					</li>
 					<li class="nav-item nav-item-has-dropdown nav-item-mega" id="nav-programas">
@@ -72,12 +72,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</div>
 										<ul class="mega-col-links">
 											<li><a href="#atendimento"><?php esc_html_e( 'Atendimento', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#orientacao-empresarial"><?php esc_html_e( 'Orientação empresarial', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#orientacao-empresarial">Orientação<br>empresarial</a></li>
 											<li><a href="#linhas-credito"><?php esc_html_e( 'Linhas de crédito', 'tema-ade-sampa' ); ?></a></li>
 											<li><a href="#educacao-financeira"><?php esc_html_e( 'Educação financeira', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#consultoria-gestao"><?php esc_html_e( 'Consultoria em gestão financeira', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#fabrica-negocios"><?php esc_html_e( 'Curso fábrica de negócios', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#gestao-negocios"><?php esc_html_e( 'Curso de gestão de negócios', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#consultoria-gestao">Consultoria em<br>gestão financeira</a></li>
+											<li><a href="#fabrica-negocios">Curso fábrica de<br>negócios</a></li>
+											<li><a href="#gestao-negocios">Curso de gestão de<br>negócios</a></li>
 										</ul>
 									</div>
 
@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</div>
 										<ul class="mega-col-links">
 											<li><a href="#vai-tec"><?php esc_html_e( 'Aceleração Vai Tec', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#hub-ia"><?php esc_html_e( 'Hub de inovação em inteligência artificial', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-ia">Hub de inovação em<br>inteligência artificial</a></li>
 										</ul>
 									</div>
 
@@ -102,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											</a>
 										</div>
 										<ul class="mega-col-links">
-											<li><a href="#aceleracao-estudios"><?php esc_html_e( 'Aceleração de estúdios', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#aceleracao-estudios">Aceleração de<br>estúdios</a></li>
 											<li><a href="#curso-game-dev"><?php esc_html_e( 'Curso de game dev', 'tema-ade-sampa' ); ?></a></li>
 											<li><a href="#hub-educacao"><?php esc_html_e( 'Hub de educação', 'tema-ade-sampa' ); ?></a></li>
 										</ul>
@@ -116,9 +116,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 											</a>
 										</div>
 										<ul class="mega-col-links">
-											<li><a href="#negocios-rurais"><?php esc_html_e( 'Aceleração de negócios rurais', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#negocios-rurais">Aceleração de<br>negócios rurais</a></li>
 											<li><a href="#aceleracao-hortas"><?php esc_html_e( 'Aceleração de hortas', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#negocios-verdes"><?php esc_html_e( 'Aceleração de negócios verdes', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#negocios-verdes">Aceleração de<br>negócios verdes</a></li>
 											<li><a href="#hub-inovacao"><?php esc_html_e( 'Hub de inovação', 'tema-ade-sampa' ); ?></a></li>
 										</ul>
 									</div>
@@ -131,9 +131,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 											</a>
 										</div>
 										<ul class="mega-col-links">
-											<li><a href="#aceleracao-audiovisual"><?php esc_html_e( 'Aceleração de audiovisual', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#aceleracao-audiovisual">Aceleração de<br>audiovisual</a></li>
 											<li><a href="#aceleracao-moda"><?php esc_html_e( 'Aceleração de moda', 'tema-ade-sampa' ); ?></a></li>
-											<li><a href="#hub-formacao-audiovisual"><?php esc_html_e( 'Hub de formação em audiovisual', 'tema-ade-sampa' ); ?></a></li>
+											<li><a href="#hub-formacao-audiovisual">Hub de formação<br>em audiovisual</a></li>
 										</ul>
 									</div>
 								</div>

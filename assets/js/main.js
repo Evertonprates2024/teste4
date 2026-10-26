@@ -11,19 +11,95 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 		/* ==========================================================================
-		   1. HEADER DROPDOWNS (PROGRAMAS & IMPRENSA)
+		   1. BARRA AZUL ATIVA DINÂMICA (INDICADOR DE NAVEGAÇÃO)
+		   ========================================================================== */
+		var navItems = document.querySelectorAll('.main-navigation .nav-item:not(.nav-item-mobile-cta)');
+		var currentPath = window.location.pathname.replace(/\/$/, '');
+
+		// Ativa automaticamente o item correspondente à página atual
+		navItems.forEach(function (item) {
+			var link = item.querySelector('> a');
+			if (link) {
+				var href = link.getAttribute('href');
+				if (href) {
+					var linkPath = href.replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '');
+					if (linkPath === currentPath && currentPath !== '') {
+						navItems.forEach(function (other) { other.classList.remove('current-menu-item'); other.classList.remove('active'); });
+						item.classList.add('current-menu-item');
+						item.classList.add('active');
+					}
+				}
+			}
+
+			var trigger = item.querySelector('> a, > .nav-dropdown-toggle');
+			if (!trigger) return;
+
+			trigger.addEventListener('click', function () {
+				navItems.forEach(function (other) {
+					other.classList.remove('current-menu-item');
+					other.classList.remove('active');
+				});
+				item.classList.add('current-menu-item');
+				item.classList.add('active');
+			});
+		});
+
+		/* ==========================================================================
+		   2. HEADER DROPDOWNS & MEGA MENU (HOVER INTENT COM BUFFER + CLIQUE)
 		   ========================================================================== */
 		var dropdownItems = document.querySelectorAll('.nav-item-has-dropdown');
+		var hoverTimeouts = {};
 
-		dropdownItems.forEach(function (item) {
+		dropdownItems.forEach(function (item, index) {
 			var btn = item.querySelector('.nav-dropdown-toggle');
+			var menu = item.querySelector('.mega-menu-dropdown, .nav-dropdown-menu');
 			if (!btn) return;
 
+			function openDropdown() {
+				clearTimeout(hoverTimeouts[index]);
+				dropdownItems.forEach(function (other, otherIndex) {
+					if (other !== item) {
+						other.classList.remove('open');
+						var otherBtn = other.querySelector('.nav-dropdown-toggle');
+						if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+					}
+				});
+				item.classList.add('open');
+				btn.setAttribute('aria-expanded', 'true');
+			}
+
+			function closeDropdownWithDelay() {
+				clearTimeout(hoverTimeouts[index]);
+				hoverTimeouts[index] = setTimeout(function () {
+					item.classList.remove('open');
+					btn.setAttribute('aria-expanded', 'false');
+				}, 280);
+			}
+
+			// Hover intent no desktop
+			item.addEventListener('mouseenter', function () {
+				if (window.innerWidth > 1024) openDropdown();
+			});
+			item.addEventListener('mouseleave', function () {
+				if (window.innerWidth > 1024) closeDropdownWithDelay();
+			});
+
+			if (menu) {
+				menu.addEventListener('mouseenter', function () {
+					if (window.innerWidth > 1024) openDropdown();
+				});
+				menu.addEventListener('mouseleave', function () {
+					if (window.innerWidth > 1024) closeDropdownWithDelay();
+				});
+			}
+
+			// Alternância por clique
 			btn.addEventListener('click', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
 
-				// Fecha outros abertos
+				var wasOpen = item.classList.contains('open');
+
 				dropdownItems.forEach(function (other) {
 					if (other !== item) {
 						other.classList.remove('open');
@@ -32,7 +108,8 @@
 					}
 				});
 
-				var isOpen = item.classList.toggle('open');
+				var isOpen = !wasOpen;
+				item.classList.toggle('open', isOpen);
 				btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 			});
 		});
