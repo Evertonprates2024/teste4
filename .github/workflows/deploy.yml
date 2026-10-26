@@ -7,14 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Sincronizar com KingHost via FTP
+  verificar:
+    name: Verificar local do FTP
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Baixar código do repositório
-        uses: actions/checkout@v4
-
-      - name: 🚀 Sincronizar tema no WordPress
+      - name: 🔍 Checar pasta atual do FTP
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
@@ -22,25 +19,13 @@ jobs:
           set dns:order "inet"
           set ftp:passive-mode true
           set ftp:ssl-allow no
-          set net:timeout 30
-          set net:max-retries 2
+          set net:timeout 15
 
-          # 1. Navega até o caminho confirmado pelo WordPress
-          cd /home/oranilom/www/wp-content/themes/tema-ade-sampa || \
-          cd /www/wp-content/themes/tema-ade-sampa || \
-          cd www/wp-content/themes/tema-ade-sampa || \
-          cd /wp-content/themes/tema-ade-sampa || \
-          cd wp-content/themes/tema-ade-sampa
+          echo "=== 1. ONDE O SEU USUÁRIO FTP POUSA ==="
+          pwd
 
-          echo ">> Conectado com sucesso na pasta do tema!"
-
-          # 2. Sincroniza as alterações diretamente para o tema
-          mirror -R --verbose \
-            --exclude-glob .git* \
-            --exclude-glob .github* \
-            --exclude-glob tema-ade-sampa.zip \
-            --exclude-glob README.md \
-            ./ ./
+          echo "=== 2. O QUE ELE ENXERGA NESSA PASTA ==="
+          ls
 
           quit
           EOF
