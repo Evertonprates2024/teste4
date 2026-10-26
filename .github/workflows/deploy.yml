@@ -19,25 +19,22 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
           lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" << 'EOF'
-          # 1. Força conexão IPv4 (evita o erro ETIMEDOUT do IPv6)
           set dns:order "inet"
-          
-          # 2. Ativa o modo passivo (obrigatório para atravessar o firewall da KingHost)
           set ftp:passive-mode true
           set ftp:ssl-allow no
-          set net:timeout 25
+          set net:timeout 30
           set net:max-retries 2
 
-          # 3. Localiza a pasta tema-ade-sampa que o WordPress acabou de criar
-          glob -d */wp-content/themes/tema-ade-sampa cd */wp-content/themes/tema-ade-sampa || \
-          glob -d */*/wp-content/themes/tema-ade-sampa cd */*/wp-content/themes/tema-ade-sampa || \
+          # 1. Navega até o caminho confirmado pelo WordPress
+          cd /home/oranilom/www/wp-content/themes/tema-ade-sampa || \
+          cd /www/wp-content/themes/tema-ade-sampa || \
           cd www/wp-content/themes/tema-ade-sampa || \
+          cd /wp-content/themes/tema-ade-sampa || \
           cd wp-content/themes/tema-ade-sampa
 
-          echo ">> Pasta conectada com sucesso:"
-          pwd
+          echo ">> Conectado com sucesso na pasta do tema!"
 
-          # 4. Sincroniza todas as alterações diretamente para o tema
+          # 2. Sincroniza as alterações diretamente para o tema
           mirror -R --verbose \
             --exclude-glob .git* \
             --exclude-glob .github* \
