@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.0.1
+Version: 2.0.3
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -418,15 +418,22 @@ button {
 	padding: 10px 22px;
 	font-size: 0.9rem;
 	border-radius: var(--ade-radius-sm);
+	white-space: nowrap;
+}
+
+.nav-item-mobile-cta {
+	display: none;
 }
 
 .mobile-menu-toggle {
 	display: none;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 42px;
-	height: 42px;
-	padding: 11px 8px;
+	width: 40px;
+	height: 38px;
+	padding: 9px 6px;
+	cursor: pointer;
+	z-index: 1002;
 }
 
 .mobile-menu-toggle span {
@@ -435,6 +442,18 @@ button {
 	height: 2.5px;
 	background-color: var(--ade-blue-navy);
 	border-radius: 2px;
+	transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.site-header.mobile-menu-open .mobile-menu-toggle span:nth-child(1) {
+	transform: translateY(7.5px) rotate(45deg);
+}
+.site-header.mobile-menu-open .mobile-menu-toggle span:nth-child(2) {
+	opacity: 0;
+	transform: scaleX(0);
+}
+.site-header.mobile-menu-open .mobile-menu-toggle span:nth-child(3) {
+	transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* ==========================================================================
@@ -1178,8 +1197,10 @@ button {
 }
 
 /* ==========================================================================
-   14. RESPONSIVIDADE (MOBILE & TABLETS)
+   14. RESPONSIVIDADE (MOBILE & TABLETS PIXEL-PERFECT)
    ========================================================================== */
+
+/* Telas Médias / Desktops Compactos (≤ 1200px) */
 @media (max-width: 1200px) {
 	.footer-nav-columns-grid {
 		grid-template-columns: repeat(4, 1fr);
@@ -1191,70 +1212,163 @@ button {
 	}
 }
 
+/* Tablets em Geral e iPad Landscape/Portrait (≤ 1024px) */
 @media (max-width: 1024px) {
+	.site-header {
+		height: 74px;
+	}
+
 	.main-navigation {
 		position: fixed;
-		top: 80px;
+		top: 74px;
 		left: 0;
 		right: 0;
 		background: rgba(255, 255, 255, 0.98);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		padding: 30px 24px;
-		box-shadow: 0 16px 32px rgba(11, 25, 56, 0.12);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		padding: 24px 24px 36px;
+		box-shadow: 0 20px 40px rgba(11, 25, 56, 0.16);
 		display: none;
 		z-index: 999;
+		max-height: calc(100vh - 74px);
+		overflow-y: auto;
+		border-bottom: 1px solid var(--ade-border-light);
 	}
 
 	.site-header.mobile-menu-open .main-navigation {
 		display: block;
+		animation: navSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	@keyframes navSlideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.nav-list {
 		flex-direction: column;
-		align-items: flex-start;
-		gap: 18px;
+		align-items: stretch;
+		gap: 8px;
+	}
+
+	.nav-item {
+		width: 100%;
 	}
 
 	.nav-item a,
 	.nav-dropdown-toggle {
-		padding: 8px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		padding: 12px 14px;
+		font-size: 1.05rem;
+		font-weight: 600;
+		border-radius: var(--ade-radius-sm);
+		transition: background-color 0.15s ease;
+	}
+
+	.nav-item a:hover,
+	.nav-dropdown-toggle:hover {
+		background-color: var(--ade-blue-light);
+	}
+
+	.nav-dropdown-menu {
+		position: static;
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		background-color: var(--ade-bg-light);
+		border-radius: var(--ade-radius-sm);
+		padding: 6px 8px;
+		margin-top: 4px;
+		margin-bottom: 8px;
+	}
+
+	.nav-dropdown-menu li a {
+		padding: 9px 12px;
+		font-size: 0.92rem;
+		border-radius: 4px;
+	}
+
+	.nav-item-mobile-cta {
+		display: block;
+		margin-top: 14px;
+		padding-top: 14px;
+		border-top: 1px solid var(--ade-border-light);
+	}
+
+	.nav-item-mobile-cta .btn {
+		width: 100%;
+		padding: 14px;
+		font-size: 1rem;
+		font-weight: 700;
 	}
 
 	.mobile-menu-toggle {
 		display: flex;
 	}
 
+	/* Verticais Grid no Tablet: 5 colunas fluidas */
 	.verticais-grid {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(5, 1fr);
+		gap: 12px;
 	}
 
+	/* Carrossel de Oportunidades: 2 colunas visíveis */
 	.oportunidade-card {
-		flex: 0 0 calc((100% - 24px) / 2);
+		flex: 0 0 calc((100% - 20px) / 2);
+		min-width: 270px;
 	}
 
+	/* Grids em coluna única */
 	.teia-split-grid,
 	.civita-split-grid {
 		grid-template-columns: 1fr;
-		gap: 40px;
+		gap: 36px;
 	}
 
+	/* Fotos Civita: 3 colunas em tablet */
 	.civita-photos-col {
-		height: auto;
+		grid-template-columns: repeat(3, 1fr);
+		height: 240px;
+		gap: 12px;
 	}
 
 	.civita-photo-card {
-		height: 280px;
+		height: 100%;
 	}
 }
 
+/* Tablets Compactos e Celulares Grandes (≤ 768px) */
 @media (max-width: 768px) {
 	.site-header {
-		height: 72px;
+		height: 70px;
 	}
 
 	.main-navigation {
-		top: 72px;
+		top: 70px;
+		max-height: calc(100vh - 70px);
+	}
+
+	.container {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.section-title {
+		font-size: 2.1rem;
+		line-height: 1.2;
+	}
+
+	.section-subtitle {
+		font-size: 0.98rem;
 	}
 
 	.hero-section {
@@ -1263,26 +1377,62 @@ button {
 	}
 
 	.hero-title {
-		font-size: 2.6rem;
+		font-size: 2.5rem;
+		line-height: 1.15;
 	}
 
 	.hero-subtitle {
 		font-size: 1rem;
 	}
 
+	/* Verticais de Atuação: Carrossel touch horizontal nativo */
 	.verticais-grid {
-		grid-template-columns: repeat(2, 1fr);
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding-bottom: 12px;
+		-webkit-overflow-scrolling: touch;
+		gap: 14px;
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+		scrollbar-width: none;
 	}
 
+	.verticais-grid::-webkit-scrollbar {
+		display: none;
+	}
+
+	.verticais-grid .vertical-card {
+		flex: 0 0 175px;
+		scroll-snap-align: start;
+	}
+
+	/* Oportunidades: 2 colunas visíveis em tablet até 620px */
 	.oportunidade-card {
-		flex: 0 0 100%;
-		min-width: 100%;
+		flex: 0 0 calc((100% - 20px) / 2);
+		min-width: 280px;
+		padding: 26px 22px;
 	}
 
-	.impacto-cards-grid,
+	/* Impacto e Produtos Digitais */
+	.impacto-cards-grid {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 16px;
+	}
+
+	.impacto-card {
+		padding: 30px 20px;
+	}
+
+	.impacto-number {
+		font-size: 2.7rem;
+	}
+
 	.produtos-digital-grid {
-		grid-template-columns: 1fr;
-		gap: 20px;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 16px;
 	}
 
 	.teia-card-body {
@@ -1294,15 +1444,39 @@ button {
 		border-bottom: 1px solid var(--ade-border-light);
 	}
 
+	.teia-card-map-img img {
+		height: 240px;
+		width: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	/* Praça Victor Civita: Galeria deslizante no touch */
 	.civita-photos-col {
-		grid-template-columns: 1fr;
-		gap: 14px;
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		gap: 12px;
+		height: 220px;
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-bottom: 6px;
+		scrollbar-width: none;
+	}
+
+	.civita-photos-col::-webkit-scrollbar {
+		display: none;
 	}
 
 	.civita-photo-card {
-		height: 220px;
+		flex: 0 0 240px;
+		scroll-snap-align: start;
+		height: 100%;
 	}
 
+	/* Rodapé Tablet */
 	.footer-top-row {
 		flex-direction: column;
 		gap: 24px;
@@ -1318,51 +1492,192 @@ button {
 	}
 
 	.footer-bottom-row {
-		flex-direction: column;
+		flex-direction: column-reverse;
 		text-align: center;
 		gap: 20px;
 	}
+
+	.footer-legal-links {
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
 }
 
-@media (max-width: 480px) {
-	.hero-title {
-		font-size: 2.2rem;
-	}
-
-	.verticais-grid {
-		display: flex;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		padding-bottom: 12px;
-		-webkit-overflow-scrolling: touch;
-		gap: 14px;
-		margin-left: -24px;
-		margin-right: -24px;
-		padding-left: 24px;
-		padding-right: 24px;
-		scrollbar-width: none;
-	}
-
-	.verticais-grid::-webkit-scrollbar {
+/* Celulares Maiores e Telas Pequenas (≤ 620px) */
+@media (max-width: 620px) {
+	.carousel-nav-btn {
 		display: none;
 	}
 
+	.carousel-nav-prev,
+	.carousel-nav-next {
+		margin: 0;
+	}
+
+	.oportunidade-card {
+		flex: 0 0 100%;
+		min-width: 100%;
+	}
+}
+
+/* Celulares (≤ 480px) */
+@media (max-width: 480px) {
+	.site-header {
+		height: 64px;
+	}
+
+	.main-navigation {
+		top: 64px;
+		max-height: calc(100vh - 64px);
+		padding: 20px 18px 30px;
+	}
+
+	.ade-header-logo-img {
+		height: 28px;
+	}
+
+	.btn-header-agendamento {
+		padding: 7px 12px;
+		font-size: 0.78rem;
+		font-weight: 700;
+	}
+
+	.hero-section {
+		padding-top: 36px;
+		padding-bottom: 40px;
+	}
+
+	.hero-title {
+		font-size: 2.1rem;
+		line-height: 1.18;
+		letter-spacing: -0.02em;
+		margin-bottom: 16px;
+	}
+
+	.hero-subtitle {
+		font-size: 0.95rem;
+		margin-bottom: 24px;
+	}
+
+	.hero-cta-wrap .btn {
+		width: 100%;
+		padding: 13px 20px;
+	}
+
+	.section-verticais {
+		padding-top: 36px;
+		padding-bottom: 44px;
+	}
+
+	.section-title {
+		font-size: 1.85rem;
+	}
+
 	.verticais-grid .vertical-card {
-		flex: 0 0 170px;
-		scroll-snap-align: start;
+		flex: 0 0 155px;
+	}
+
+	.carousel-nav-btn {
+		display: none;
+	}
+
+	.carousel-nav-prev,
+	.carousel-nav-next {
+		margin: 0;
+	}
+
+	.oportunidade-card {
+		flex: 0 0 100%;
+		min-width: 100%;
+		padding: 22px 18px;
+	}
+
+	.oportunidade-title {
+		font-size: 1.35rem;
+	}
+
+	.impacto-cards-grid {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+
+	.impacto-card {
+		padding: 24px 18px;
+	}
+
+	.impacto-number {
+		font-size: 2.5rem;
+	}
+
+	.teia-title {
+		font-size: 1.85rem;
 	}
 
 	.teia-buttons-wrap {
 		flex-direction: column;
+		gap: 12px;
 	}
 
 	.teia-buttons-wrap .btn {
 		width: 100%;
 	}
 
-	.civita-meta-grid {
+	.produtos-digital-grid {
 		grid-template-columns: 1fr;
 		gap: 16px;
+	}
+
+	.produto-card {
+		padding: 24px 20px;
+	}
+
+	.civita-content h2 {
+		font-size: 1.85rem;
+	}
+
+	.civita-meta-grid {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+
+	.civita-photos-col .civita-photo-card {
+		flex: 0 0 210px;
+	}
+
+	.footer-nav-columns-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 22px 12px;
+	}
+
+	.footer-col-title {
+		font-size: 0.88rem;
+		margin-bottom: 12px;
+	}
+
+	.footer-col-nav li a {
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+}
+
+/* Telas Ultra-Pequenas (≤ 360px) */
+@media (max-width: 360px) {
+	.ade-header-logo-img {
+		height: 25px;
+	}
+
+	.btn-header-agendamento {
+		padding: 6px 9px;
+		font-size: 0.72rem;
+	}
+
+	.hero-title {
+		font-size: 1.85rem;
+	}
+
+	.verticais-grid .vertical-card {
+		flex: 0 0 140px;
 	}
 
 	.footer-nav-columns-grid {

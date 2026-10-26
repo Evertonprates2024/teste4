@@ -77,6 +77,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<li class="nav-item">
 						<a href="#transparencia"><?php esc_html_e( 'Transparência', 'tema-ade-sampa' ); ?></a>
 					</li>
+					<li class="nav-item nav-item-mobile-cta">
+						<a href="#agendamentos" class="btn btn-primary btn-block"><?php esc_html_e( 'Agendamentos', 'tema-ade-sampa' ); ?></a>
+					</li>
 				</ul>
 			</nav>
 
