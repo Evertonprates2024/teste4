@@ -16,22 +16,25 @@ if ( have_posts() ) {
 	the_post();
 }
 
-$is_elementor = false;
+// Elementor compatibility: check if page has actual Elementor widgets or is inside the editor
+$elementor_data = get_post_meta( get_the_ID(), '_elementor_data', true );
+$has_elementor_content = ! empty( $elementor_data ) && '[]' !== trim( $elementor_data );
+
+$is_elementor_editor = false;
 if ( class_exists( '\Elementor\Plugin' ) ) {
 	$is_preview = \Elementor\Plugin::$instance->preview->is_preview_mode();
 	$is_editor  = \Elementor\Plugin::$instance->editor->is_edit_mode();
-	$doc        = \Elementor\Plugin::$instance->documents->get( get_the_ID() );
-	$is_built   = $doc ? $doc->is_built_with_elementor() : false;
-	if ( $is_preview || $is_editor || $is_built ) {
-		$is_elementor = true;
+	if ( $is_preview || $is_editor ) {
+		$is_elementor_editor = true;
 	}
 }
 
 if ( isset( $_GET['elementor-preview'] ) || ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) ) {
-	$is_elementor = true;
+	$is_elementor_editor = true;
 }
 
-if ( $is_elementor ) {
+// Only replace the full Figma site if the editor is active OR if real Elementor widgets were built and published
+if ( $is_elementor_editor || $has_elementor_content ) {
 	?>
 	<main id="primary" class="site-main elementor-fullwidth-main">
 		<?php the_content(); ?>
