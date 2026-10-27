@@ -1,0 +1,36 @@
+name: Recuperação de Desastre (Disaster Recovery)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  recover:
+    name: Restaurar WordPress, Plugins e Tema na KingHost
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: 🌐 Executar Reconstrução no Servidor KingHost
+        run: |
+          KEY="${{ secrets.DEPLOY_SECRET }}"
+          URL="http://oranilom.com.br/wp-content/themes/tema-ade-sampa/restaurar-site.php?key=${KEY}&format=json"
+          
+          echo "Disparando recuperação automática em: $URL"
+          RESPONSE=$(curl -s --max-time 180 "$URL")
+          echo "Resposta do servidor KingHost:"
+          echo "$RESPONSE"
+          
+          if echo "$RESPONSE" | grep -q '"success":true'; then
+            echo "✅ Site restaurado com sucesso!"
+          else
+            echo "❌ Erro ao restaurar o site."
+            exit 1
+          fi
+
+      - name: 🎉 Conclusão
+        run: |
+          echo "=========================================================="
+          echo "  Recuperação Concluída com Sucesso!"
+          echo "  Site no ar: http://oranilom.com.br"
+          echo "=========================================================="
