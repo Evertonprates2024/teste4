@@ -26,27 +26,13 @@ function ade_sampa_get_logo( $name ) {
 			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-adesampa-footer.png' ) . '" alt="ADE SAMPA" class="ade-footer-logo-img" height="40" style="height: 40px; width: auto; max-height: 44px; max-width: 200px; object-fit: contain; display: block;" />';
 
 		case 'product-ensina':
-			return '
-			<svg class="product-app-icon" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect width="60" height="60" rx="16" fill="#004CE8"/>
-				<path d="M24 20L42 30L24 40V20Z" fill="white"/>
-			</svg>';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-produto-ensina.png' ) . '" alt="' . esc_attr__( 'Sampa Ensina', 'tema-ade-sampa' ) . '" class="product-app-icon" width="48" height="48" loading="lazy" />';
 
 		case 'product-data':
-			return '
-			<svg class="product-app-icon" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect width="60" height="60" rx="16" fill="#004CE8"/>
-				<path d="M22 18H34C39.5228 18 44 22.4772 44 28V32C44 37.5228 39.5228 42 34 42H22V18Z" stroke="white" stroke-width="4.5" stroke-linejoin="round"/>
-				<rect x="22" y="26" width="6" height="16" fill="white"/>
-			</svg>';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-produto-data.png' ) . '" alt="' . esc_attr__( 'Data Sampa', 'tema-ade-sampa' ) . '" class="product-app-icon" width="48" height="48" loading="lazy" />';
 
 		case 'product-gestao':
-			return '
-			<svg class="product-app-icon" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect width="60" height="60" rx="16" fill="#004CE8"/>
-				<circle cx="30" cy="30" r="14" stroke="white" stroke-width="4.5"/>
-				<path d="M30 24V30H36" stroke="white" stroke-width="4" stroke-linecap="round"/>
-			</svg>';
+			return '<img src="' . esc_url( $theme_uri . '/assets/images/logo-produto-gestao.png' ) . '" alt="' . esc_attr__( 'Gestão Sampa', 'tema-ade-sampa' ) . '" class="product-app-icon" width="48" height="48" loading="lazy" />';
 
 		case 'check-circle':
 			return '
