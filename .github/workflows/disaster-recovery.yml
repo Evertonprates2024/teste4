@@ -21,7 +21,7 @@ jobs:
           RESPONSE=$(curl -s --max-time 180 "$URL_ROOT" || true)
           
           # Se der 404 na raiz, tenta na pasta do tema
-          if ! echo "$RESPONSE" | grep -q '"success":true'; then
+          if ! echo "$RESPONSE" | grep -E -q '"success"[[:space:]]*:[[:space:]]*true'; then
             echo "Tentando caminho alternativo na pasta do tema: $URL_THEME"
             RESPONSE=$(curl -s --max-time 180 "$URL_THEME" || true)
           fi
@@ -29,7 +29,7 @@ jobs:
           echo "Resposta do servidor KingHost:"
           echo "$RESPONSE"
           
-          if echo "$RESPONSE" | grep -q '"success":true'; then
+          if echo "$RESPONSE" | grep -E -q '"success"[[:space:]]*:[[:space:]]*true'; then
             echo "✅ Site restaurado com sucesso!"
           else
             echo "❌ Erro ao restaurar o site."
