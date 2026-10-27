@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.1.0
+Version: 2.1.1
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -365,10 +365,20 @@ button {
 	color: var(--ade-blue-primary);
 }
 
-.nav-item.current-menu-item > a,
-.nav-item.current-menu-item > .nav-dropdown-toggle,
-.nav-item.active > a,
-.nav-item.active > .nav-dropdown-toggle,
+/* Estado padrao: quando o menu NAO esta em hover, o item ativo atual exibe a barra azul */
+.nav-list:not(:hover) .nav-item.current-menu-item > a,
+.nav-list:not(:hover) .nav-item.current-menu-item > .nav-dropdown-toggle,
+.nav-list:not(:hover) .nav-item.active > a,
+.nav-list:not(:hover) .nav-item.active > .nav-dropdown-toggle {
+	color: var(--ade-blue-primary);
+	font-weight: 600;
+	box-shadow: inset 0 -3px 0 var(--ade-blue-primary);
+}
+
+/* Ao passar o mouse por QUALQUER item do menu, ou quando um dropdown esta aberto:
+   A barra azul vai imediatamente para onde o cursor esta (e nao fica fixa no Home) */
+.nav-item:hover > a,
+.nav-item:hover > .nav-dropdown-toggle,
 .nav-item.open > .nav-dropdown-toggle {
 	color: var(--ade-blue-primary);
 	font-weight: 600;
