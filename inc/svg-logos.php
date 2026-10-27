@@ -56,16 +56,10 @@ function ade_sampa_get_logo( $name ) {
 			</svg>';
 
 		case 'brasao-prefeitura-white':
-			return '
-			<div class="prefeitura-footer-brand">
-				<svg width="44" height="48" viewBox="0 0 44 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M22 2L4 8V22C4 33 11.5 43.5 22 46C32.5 43.5 40 33 40 22V8L22 2Z" stroke="white" stroke-width="2" fill="none"/>
-					<path d="M22 6L8 11V22C8 30.5 14 38.5 22 41C30 38.5 36 30.5 36 22V11L22 6Z" fill="rgba(255,255,255,0.15)"/>
-					<rect x="18" y="14" width="8" height="6" fill="white"/>
-					<path d="M14 24H30M14 28H30M14 32H26" stroke="white" stroke-width="2" stroke-linecap="round"/>
-				</svg>
-				<span class="prefeitura-footer-title">PREFEITURA DE<br><strong>SÃO PAULO</strong></span>
-			</div>';
+			$logo_url = get_template_directory_uri() . '/assets/images/logo-prefeitura-sp.png';
+			return '<a href="https://capital.sp.gov.br" target="_blank" rel="noopener noreferrer" class="prefeitura-footer-brand" aria-label="' . esc_attr__( 'Prefeitura do Município de São Paulo', 'tema-ade-sampa' ) . '">
+				<img src="' . esc_url( $logo_url ) . '" alt="' . esc_attr__( 'Prefeitura do Município de São Paulo', 'tema-ade-sampa' ) . '" class="prefeitura-footer-img" width="160" height="48" loading="lazy">
+			</a>';
 
 		default:
 			return '';
