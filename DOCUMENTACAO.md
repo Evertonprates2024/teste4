@@ -174,42 +174,70 @@ Abra o PowerShell na pasta do projeto e execute:
 
 ---
 
-## 8. Sistema de Backup Completo (Tema, Banco de Dados e Configurações)
+## 8. Sistema de Backup Completo (Tema, Banco de Dados e Estrutura WWW)
 
-O projeto conta com ferramentas automatizadas para geração de cópias de segurança instantâneas tanto locais quanto do servidor KingHost em produção.
+O projeto conta com ferramentas automatizadas para geração de cópias de segurança instantâneas tanto locais quanto do servidor KingHost em produção, suportando dois níveis de escopo:
 
-### O que está incluso em cada backup:
-1. **Dump do Banco de Dados MySQL (`database_backup_*.sql`)**:
-   - Todas as 13 tabelas WordPress (`wp_posts`, `wp_postmeta`, `wp_options`, `wp_users`, etc.).
-   - 100% dos dados, páginas, opções do tema, menus e configurações.
-2. **Arquivo de Configurações (`wp-config.php`)**:
-   - Credenciais do MySQL, chaves de segurança e prefixos de tabela.
-3. **Manifesto do Sistema (`backup_info.json`)**:
-   - Data, versão do tema (`2.1.3`), contagem de registros e tabelas exportadas.
-4. **Pacote do Tema WordPress (`tema-ade-sampa-v2.1.3.zip`)**:
-   - Código PHP, estilos CSS, scripts JS e todos os ativos e logotipos vetoriais do Figma.
+### Modalidades de Backup Disponíveis:
 
-### Método 1: Via Script PowerShell no Computador (`fazer-backup.ps1`)
-Abra o PowerShell na pasta do projeto e execute:
-```powershell
-.\fazer-backup.ps1
-```
-O script empacota o tema local e faz o download direto do dump MySQL do servidor para a pasta `backups/`.
+#### 1. Modo Estrutural Completo da Pasta WWW (`-Completo` ou `&full=1`):
+- **Toda a pasta `www` do servidor (WordPress Core completo + Dados)**:
+  - `wp-admin/` (painel de administração e scripts)
+  - `wp-includes/` (bibliotecas do WordPress)
+  - `wp-content/` (todos os plugins como Elementor, todos os temas e arquivos de mídia/uploads)
+  - Arquivos de raiz (`.htaccess`, `wp-config.php`, `deploy.php`, `restaurar-site.php`, `index.php`, etc.)
+- **Dump Completo do Banco de Dados MySQL (`database_backup_*.sql`)**:
+  - Todas as 13 tabelas (`wp_posts`, `wp_postmeta`, `wp_options`, `wp_users`, etc.).
+- **Manifesto do Sistema (`backup_info.json`)**:
+  - Metadados, versão do tema (`2.1.3`), contagem de arquivos e registros exportados.
 
-### Método 2: Via Navegador (Download Direto do Servidor)
+#### 2. Modo Padrão (Rápido):
+- Dump do Banco de Dados MySQL (`database_backup_*.sql`).
+- Cópia segura de `wp-config.php`.
+- Pacote do tema oficial compactado (`tema-ade-sampa-v2.1.3.zip`).
+- Manifesto descritivo (`backup_info.json`).
+
+---
+
+### Como Gerar os Backups:
+
+#### Método 1: Via Script PowerShell no Computador (`fazer-backup.ps1`)
+Abra o PowerShell na pasta do projeto:
+
+- **Para o Backup Completo da Pasta WWW + Banco:**
+  ```powershell
+  .\fazer-backup.ps1 -Completo
+  ```
+- **Para o Backup Padrão (Rápido):**
+  ```powershell
+  .\fazer-backup.ps1
+  ```
+- **Para Diagnóstico e Mapeamento da pasta WWW:**
+  ```powershell
+  .\fazer-backup.ps1 -ScanOnly
+  ```
+
+#### Método 2: Pelo Navegador (Download Direto do Servidor)
 Acesse a URL protegida com a chave mestre:
-```text
-http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025
-```
-Você verá o painel com as estatísticas do backup e um botão para download imediato do arquivo `.zip`.
 
-Para download direto sem interface HTML:
-```text
-http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025&download=1
-```
+- **Painel Interativo de Backup Completo (WWW):**
+  ```text
+  http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025&full=1
+  ```
+- **Download Direto do Backup Completo (WWW):**
+  ```text
+  http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025&full=1&download=1
+  ```
+- **Painel Interativo de Backup Padrão (Banco + Tema):**
+  ```text
+  http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025
+  ```
+
+---
 
 ### Localização dos Backups:
 - **Local no seu Computador**: pasta `backups/` dentro do projeto.
 - **No Servidor KingHost**: pasta permanente `/home/oranilom/www/wp-content/uploads/backups/`.
 - **No GitHub**: snapshot registrado na tag de release `backup-v2.1.3-20261027` e branch `backup/site-atual-v2.1.3`.
+
 
