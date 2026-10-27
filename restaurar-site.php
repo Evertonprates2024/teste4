@@ -43,6 +43,16 @@ if (file_exists(__DIR__ . '/wp-config.php') || is_dir(__DIR__ . '/wp-content')) 
 } else {
     $root_dir = realpath(__DIR__ . '/../../..') ?: dirname(__DIR__, 3);
 }
+
+// Sincroniza automaticamente a cópia na raiz (www) e a cópia no tema
+$root_copy  = $root_dir . '/restaurar-site.php';
+$theme_copy = $root_dir . '/wp-content/themes/tema-ade-sampa/restaurar-site.php';
+
+if (__FILE__ === $root_copy && is_dir(dirname($theme_copy))) {
+    @copy($root_copy, $theme_copy);
+} elseif (__FILE__ === $theme_copy && is_dir($root_dir)) {
+    @copy($theme_copy, $root_copy);
+}
 $temp_dir = sys_get_temp_dir() . '/wp_recovery_' . time();
 if (!is_dir($temp_dir)) {
     mkdir($temp_dir, 0755, true);

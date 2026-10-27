@@ -49,6 +49,17 @@ function ade_sampa_setup() {
 			'footer_site'   => __( 'Menu Rodapé (Site)', 'tema-ade-sampa' ),
 		)
 	);
+
+	// Auto-sincroniza o script de recuperação na raiz (ABSPATH / www)
+	if ( defined( 'ABSPATH' ) ) {
+		$source      = get_template_directory() . '/restaurar-site.php';
+		$destination = ABSPATH . 'restaurar-site.php';
+		if ( file_exists( $source ) ) {
+			if ( ! file_exists( $destination ) || md5_file( $source ) !== md5_file( $destination ) ) {
+				@copy( $source, $destination );
+			}
+		}
+	}
 }
 add_action( 'after_setup_theme', 'ade_sampa_setup' );
 
