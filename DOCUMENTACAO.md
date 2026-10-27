@@ -141,3 +141,33 @@ curl.exe -s -X POST "http://oranilom.com.br/deploy.php" -F "key=ade_sampa_super_
 ### Controle de Versão (GitHub)
 Repositório oficial: `https://github.com/brunnomolinaro/tema-ade-sampa.git`
 Branch principal: `main`
+
+---
+
+## 7. Sistema de Recuperação de Desastre (Disaster Recovery)
+
+Caso pastas do site (como `wp-admin`, `wp-includes` ou `wp-content`) sejam apagadas acidentalmente via FTP (FileZilla) ou corrompidas, existem 3 formas automatizadas de recuperação:
+
+### Método 1: Via Navegador (Qualquer Celular ou Computador)
+Acesse a URL protegida com a chave mestre:
+```text
+http://oranilom.com.br/wp-content/themes/tema-ade-sampa/restaurar-site.php?key=ade_sampa_super_secret_2025
+```
+O servidor KingHost executa em segundo plano:
+1. Baixa o pacote oficial do WordPress (pt_BR) e restaura `wp-admin/`, `wp-includes/` e arquivos raiz.
+2. Restaura a estrutura de pastas de `wp-content/`.
+3. Baixa a versão oficial do tema diretamente da branch `main` do GitHub.
+4. Baixa e instala o plugin Elementor oficial.
+5. Preserva as credenciais do banco de dados em `wp-config.php`.
+
+### Método 2: Via Script PowerShell no seu Computador (`recuperar-site.ps1`)
+Abra o PowerShell na pasta do projeto e execute:
+```powershell
+.\recuperar-site.ps1
+```
+
+### Método 3: Via GitHub Actions (1 Clique na Web)
+1. Acesse o seu repositório no GitHub: [github.com/brunnomolinaro/tema-ade-sampa](https://github.com/brunnomolinaro/tema-ade-sampa).
+2. Vá na aba **Actions**.
+3. Selecione o fluxo **Recuperação de Desastre (Disaster Recovery)**.
+4. Clique em **Run workflow**.
