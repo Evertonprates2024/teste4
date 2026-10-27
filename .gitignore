@@ -1,0 +1,12 @@
+# Backups e Dumps
+backups/*.zip
+backups/*.sql
+
+# Arquivos temporários e logs
+*.log
+.DS_Store
+Thumbs.db
+
+# Ambientes locais / scratch
+scratch/
+tmp/

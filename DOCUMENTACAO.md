@@ -171,3 +171,45 @@ Abra o PowerShell na pasta do projeto e execute:
 2. Vá na aba **Actions**.
 3. Selecione o fluxo **Recuperação de Desastre (Disaster Recovery)**.
 4. Clique em **Run workflow**.
+
+---
+
+## 8. Sistema de Backup Completo (Tema, Banco de Dados e Configurações)
+
+O projeto conta com ferramentas automatizadas para geração de cópias de segurança instantâneas tanto locais quanto do servidor KingHost em produção.
+
+### O que está incluso em cada backup:
+1. **Dump do Banco de Dados MySQL (`database_backup_*.sql`)**:
+   - Todas as 13 tabelas WordPress (`wp_posts`, `wp_postmeta`, `wp_options`, `wp_users`, etc.).
+   - 100% dos dados, páginas, opções do tema, menus e configurações.
+2. **Arquivo de Configurações (`wp-config.php`)**:
+   - Credenciais do MySQL, chaves de segurança e prefixos de tabela.
+3. **Manifesto do Sistema (`backup_info.json`)**:
+   - Data, versão do tema (`2.1.3`), contagem de registros e tabelas exportadas.
+4. **Pacote do Tema WordPress (`tema-ade-sampa-v2.1.3.zip`)**:
+   - Código PHP, estilos CSS, scripts JS e todos os ativos e logotipos vetoriais do Figma.
+
+### Método 1: Via Script PowerShell no Computador (`fazer-backup.ps1`)
+Abra o PowerShell na pasta do projeto e execute:
+```powershell
+.\fazer-backup.ps1
+```
+O script empacota o tema local e faz o download direto do dump MySQL do servidor para a pasta `backups/`.
+
+### Método 2: Via Navegador (Download Direto do Servidor)
+Acesse a URL protegida com a chave mestre:
+```text
+http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025
+```
+Você verá o painel com as estatísticas do backup e um botão para download imediato do arquivo `.zip`.
+
+Para download direto sem interface HTML:
+```text
+http://oranilom.com.br/backup-site.php?key=ade_sampa_super_secret_2025&download=1
+```
+
+### Localização dos Backups:
+- **Local no seu Computador**: pasta `backups/` dentro do projeto.
+- **No Servidor KingHost**: pasta permanente `/home/oranilom/www/wp-content/uploads/backups/`.
+- **No GitHub**: snapshot registrado na tag de release `backup-v2.1.3-20261027` e branch `backup/site-atual-v2.1.3`.
+
