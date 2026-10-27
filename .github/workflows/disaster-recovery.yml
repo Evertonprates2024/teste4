@@ -14,10 +14,18 @@ jobs:
       - name: 🌐 Executar Reconstrução no Servidor KingHost
         run: |
           KEY="${{ secrets.DEPLOY_SECRET }}"
-          URL="http://oranilom.com.br/wp-content/themes/tema-ade-sampa/restaurar-site.php?key=${KEY}&format=json"
+          URL_ROOT="http://oranilom.com.br/restaurar-site.php?key=${KEY}&format=json"
+          URL_THEME="http://oranilom.com.br/wp-content/themes/tema-ade-sampa/restaurar-site.php?key=${KEY}&format=json"
           
-          echo "Disparando recuperação automática em: $URL"
-          RESPONSE=$(curl -s --max-time 180 "$URL")
+          echo "Tentando recuperação na raiz: $URL_ROOT"
+          RESPONSE=$(curl -s --max-time 180 "$URL_ROOT" || true)
+          
+          # Se der 404 na raiz, tenta na pasta do tema
+          if ! echo "$RESPONSE" | grep -q '"success":true'; then
+            echo "Tentando caminho alternativo na pasta do tema: $URL_THEME"
+            RESPONSE=$(curl -s --max-time 180 "$URL_THEME" || true)
+          fi
+
           echo "Resposta do servidor KingHost:"
           echo "$RESPONSE"
           
