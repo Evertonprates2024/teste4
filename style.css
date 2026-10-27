@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.0.9
+Version: 2.1.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -657,6 +657,7 @@ button {
 	padding-top: 76px;
 	padding-bottom: 70px;
 	background-color: var(--ade-white);
+	border-bottom: 1px solid #DCEBFA;
 }
 
 .hero-container {
@@ -665,11 +666,11 @@ button {
 
 .hero-title {
 	font-family: var(--ade-font-heading);
-	font-size: 3.6rem;
-	font-weight: 800;
+	font-size: 3.15rem;
+	font-weight: 700;
 	color: var(--ade-blue-navy);
-	line-height: 1.08;
-	letter-spacing: -0.01em;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
 	margin-top: 8px;
 	margin-bottom: 18px;
 	text-transform: none;
@@ -694,7 +695,8 @@ button {
 .section-verticais {
 	padding-top: 50px;
 	padding-bottom: 80px;
-	background-color: var(--ade-white);
+	background-color: #F5FAFF;
+	border-bottom: 1px solid #DCEBFA;
 }
 
 .verticais-grid {
@@ -1638,8 +1640,9 @@ button {
 	}
 
 	.hero-title {
-		font-size: 2.5rem;
+		font-size: 2.35rem;
 		line-height: 1.15;
+		font-weight: 700;
 	}
 
 	.hero-subtitle {
@@ -1815,10 +1818,11 @@ button {
 	}
 
 	.hero-title {
-		font-size: 2.1rem;
+		font-size: 2rem;
 		line-height: 1.18;
 		letter-spacing: -0.02em;
 		margin-bottom: 16px;
+		font-weight: 700;
 	}
 
 	.hero-subtitle {
@@ -1939,7 +1943,8 @@ button {
 	}
 
 	.hero-title {
-		font-size: 1.85rem;
+		font-size: 1.75rem;
+		font-weight: 700;
 	}
 
 	.verticais-grid .vertical-card {

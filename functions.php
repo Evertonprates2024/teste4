@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ADE_SAMPA_VERSION', '2.0.9' );
+define( 'ADE_SAMPA_VERSION', '2.1.0' );
 
 require_once get_template_directory() . '/inc/svg-logos.php';
 
