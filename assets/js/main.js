@@ -18,30 +18,45 @@
 
 		// Ativa automaticamente o item correspondente à página atual
 		navItems.forEach(function (item) {
-			var link = item.querySelector('> a');
+			var link = null;
+			var trigger = null;
+
+			// Procura link e trigger diretos através dos filhos imediatos (compatível com todos os navegadores)
+			for (var i = 0; i < item.children.length; i++) {
+				var child = item.children[i];
+				if (child.tagName === 'A' && !link) {
+					link = child;
+				}
+				if (child.classList.contains('nav-dropdown-toggle') || child.tagName === 'A') {
+					if (!trigger) trigger = child;
+				}
+			}
+
 			if (link) {
 				var href = link.getAttribute('href');
 				if (href) {
 					var linkPath = href.replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '');
 					if (linkPath === currentPath && currentPath !== '') {
-						navItems.forEach(function (other) { other.classList.remove('current-menu-item'); other.classList.remove('active'); });
+						navItems.forEach(function (other) {
+							other.classList.remove('current-menu-item');
+							other.classList.remove('active');
+						});
 						item.classList.add('current-menu-item');
 						item.classList.add('active');
 					}
 				}
 			}
 
-			var trigger = item.querySelector('> a, > .nav-dropdown-toggle');
-			if (!trigger) return;
-
-			trigger.addEventListener('click', function () {
-				navItems.forEach(function (other) {
-					other.classList.remove('current-menu-item');
-					other.classList.remove('active');
+			if (trigger) {
+				trigger.addEventListener('click', function () {
+					navItems.forEach(function (other) {
+						other.classList.remove('current-menu-item');
+						other.classList.remove('active');
+					});
+					item.classList.add('current-menu-item');
+					item.classList.add('active');
 				});
-				item.classList.add('current-menu-item');
-				item.classList.add('active');
-			});
+			}
 		});
 
 		/* ==========================================================================
@@ -136,18 +151,23 @@
 		});
 
 		/* ==========================================================================
-		   2. MENU MOBILE TOGGLE
+		   3. MENU MOBILE TOGGLE (TABLETS & CELULARES)
 		   ========================================================================== */
 		var mobileToggle = document.getElementById('mobile-menu-toggle');
 		var siteHeader = document.getElementById('masthead');
 
 		if (mobileToggle && siteHeader) {
-			mobileToggle.addEventListener('click', function (e) {
-				e.stopPropagation();
+			function toggleMobileMenu(e) {
+				if (e) {
+					e.preventDefault();
+					e.stopPropagation();
+				}
 				var isOpen = siteHeader.classList.toggle('mobile-menu-open');
 				mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 				document.body.classList.toggle('mobile-nav-active', isOpen);
-			});
+			}
+
+			mobileToggle.addEventListener('click', toggleMobileMenu);
 
 			// Fecha ao clicar em qualquer link de navegação interno
 			var navLinks = siteHeader.querySelectorAll('.main-navigation a');

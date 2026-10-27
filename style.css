@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.0.7
+Version: 2.0.8
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -623,6 +623,10 @@ button {
 	padding: 9px 6px;
 	cursor: pointer;
 	z-index: 1002;
+	background: transparent;
+	border: none;
+	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .mobile-menu-toggle span {
@@ -632,6 +636,7 @@ button {
 	background-color: var(--ade-blue-navy);
 	border-radius: 2px;
 	transition: transform 0.25s ease, opacity 0.2s ease;
+	pointer-events: none;
 }
 
 .site-header.mobile-menu-open .mobile-menu-toggle span:nth-child(1) {
@@ -1466,6 +1471,15 @@ button {
 	.nav-item a:hover,
 	.nav-dropdown-toggle:hover {
 		background-color: var(--ade-blue-light);
+	}
+
+	.nav-item.current-menu-item > a,
+	.nav-item.current-menu-item > .nav-dropdown-toggle,
+	.nav-item.active > a,
+	.nav-item.active > .nav-dropdown-toggle {
+		color: var(--ade-blue-primary);
+		background-color: var(--ade-blue-light);
+		box-shadow: inset 4px 0 0 var(--ade-blue-primary);
 	}
 
 	.nav-dropdown-menu {
