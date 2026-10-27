@@ -4,7 +4,7 @@ Theme URI: https://github.com/brunnomolinaro/tema-ade-sampa
 Author: ADE SAMPA / Brunno Molinaro
 Author URI: https://github.com/brunnomolinaro
 Description: Tema oficial WordPress da Agência São Paulo de Desenvolvimento (ADE SAMPA 2025), desenvolvido com fidelidade pixel-perfect a partir do mockup oficial do Figma. Construído com Vanilla PHP 8, HTML5 semântico acessível, Vanilla CSS3 moderno (Design Tokens, CSS Grid, Flexbox) e Vanilla JS ES6+.
-Version: 2.1.1
+Version: 2.1.2
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -271,12 +271,12 @@ button {
 
 .section-title {
 	font-family: var(--ade-font-heading);
-	font-size: 2.5rem;
+	font-size: 2.35rem;
 	font-weight: 700;
 	color: var(--ade-blue-navy);
-	letter-spacing: 0.01em;
+	letter-spacing: -0.02em;
 	line-height: 1.15;
-	margin-bottom: 12px;
+	margin-bottom: 14px;
 }
 
 .section-subtitle {
@@ -949,6 +949,7 @@ button {
 	padding-top: 90px;
 	padding-bottom: 90px;
 	background-color: var(--ade-white);
+	border-bottom: 1px solid #DCEBFA;
 }
 
 .teia-split-grid {
@@ -959,8 +960,12 @@ button {
 }
 
 .teia-title {
-	font-size: 2.7rem;
-	line-height: 1.14;
+	font-family: var(--ade-font-heading);
+	font-size: 2.35rem;
+	font-weight: 700;
+	color: var(--ade-blue-navy);
+	line-height: 1.18;
+	letter-spacing: -0.02em;
 	margin-top: 6px;
 	margin-bottom: 18px;
 }
@@ -1065,7 +1070,8 @@ button {
 .section-produtos {
 	padding-top: 70px;
 	padding-bottom: 80px;
-	background-color: var(--ade-white);
+	background-color: #F5FAFF;
+	border-bottom: 1px solid #DCEBFA;
 }
 
 .produtos-digital-grid {
@@ -1075,6 +1081,7 @@ button {
 }
 
 .produto-digital-card {
+	background-color: var(--ade-white);
 	border: 1px solid var(--ade-border-light);
 	border-radius: var(--ade-radius-lg);
 	padding: 38px 30px;
@@ -1636,8 +1643,15 @@ button {
 	}
 
 	.section-title {
-		font-size: 2.1rem;
+		font-size: 2.05rem;
 		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	.teia-title {
+		font-size: 2.05rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
 	}
 
 	.section-subtitle {
@@ -1851,7 +1865,8 @@ button {
 	}
 
 	.section-title {
-		font-size: 1.85rem;
+		font-size: 1.8rem;
+		letter-spacing: -0.02em;
 	}
 
 	.verticais-grid .vertical-card {
@@ -1891,7 +1906,8 @@ button {
 	}
 
 	.teia-title {
-		font-size: 1.85rem;
+		font-size: 1.8rem;
+		letter-spacing: -0.02em;
 	}
 
 	.teia-buttons-wrap {

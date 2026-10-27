@@ -327,7 +327,7 @@ if ($is_json) {
                 <h1>Portal ADE SAMPA — Recuperação de Desastre</h1>
                 <p style="font-size: 0.85rem; color: #94A3B8; margin-top: 4px;">Restauração de Core, Tema GitHub e Plugins</p>
             </div>
-            <span class="badge">v2.1.1</span>
+            <span class="badge">v2.1.2</span>
         </div>
 
         <ul class="steps">
